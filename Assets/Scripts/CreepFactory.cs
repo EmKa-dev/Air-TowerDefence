@@ -9,16 +9,6 @@ public class CreepFactory
     public CreepFactory()
     {
         LoadCreepResources();
-
-        if (CheckAllAreUnique())
-        {
-            throw new Exception("Duplicate names found in CreepPrefabs, please make sure they are all unique");
-        }
-    }
-
-    private bool CheckAllAreUnique()
-    {
-        return _CreepPrefabs.Distinct().Count() == _CreepPrefabs.Count() ? false : true;
     }
 
     private void LoadCreepResources()
