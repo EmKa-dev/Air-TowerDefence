@@ -16,13 +16,13 @@ public class CreepScript : MonoBehaviour
     private Vector3 TargetPositionInWorldSpace;
 
     [SerializeField]
-    private Vector3 RelativePosition;
+    private Vector3 RelativePositionToWayPoint;
 
     void Start()
     {
         FindSpawnPoint();
         TargetPositionInWorldSpace = transform.position;
-        RelativePosition = TargetWayPoint.transform.InverseTransformPoint(transform.position);
+        RelativePositionToWayPoint = TargetWayPoint.transform.InverseTransformPoint(transform.position);
     }
 
     void Update()
@@ -40,11 +40,22 @@ public class CreepScript : MonoBehaviour
         if (Vector3.Distance(transform.position, TargetPositionInWorldSpace) < 0.001f)
         {
             GetNextTargetPosition();
+            RotateTowardsTarget();
         }
 
-        Vector3 targetvector = Vector3.MoveTowards(transform.position, TargetPositionInWorldSpace, Speed);
+        Vector3 targetvector = Vector3.MoveTowards(transform.position, TargetPositionInWorldSpace, Speed * Time.deltaTime);
 
         transform.position = targetvector;
+    }
+
+    private void RotateTowardsTarget()
+    {
+        Vector3 t;
+        t.x = TargetPositionInWorldSpace.x;
+        t.z = TargetPositionInWorldSpace.z;
+        t.y = transform.position.y;
+
+        transform.LookAt(t);
     }
 
     private void GetNextTargetPosition()
@@ -54,6 +65,6 @@ public class CreepScript : MonoBehaviour
             TargetWayPoint = TargetWayPoint.Next;
         }
 
-        TargetPositionInWorldSpace = TargetWayPoint.transform.TransformPoint(RelativePosition);
+        TargetPositionInWorldSpace = TargetWayPoint.transform.TransformPoint(RelativePositionToWayPoint);
     }
 }

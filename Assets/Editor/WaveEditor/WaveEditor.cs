@@ -512,6 +512,8 @@ public class WaveEditor
 
             const string PreviewObjectSuffix = "-Preview";
 
+            readonly Vector3 SpawnPosition;
+
             public SpawnEditingScene(WaveEditorSceneContext context)
             {
                 _CreepPrefabs = Resources.LoadAll("CreepPrefabs").Cast<GameObject>().ToArray();
@@ -522,6 +524,8 @@ public class WaveEditor
                 CreepButtonStyle = _Context._EditorGUISkin.GetStyle("CreepButton");
                 SaveButtonStyle = _Context._EditorGUISkin.GetStyle("SaveButton");
                 DeleteButtonStyle = _Context._EditorGUISkin.GetStyle("DeleteButton");
+
+                SpawnPosition = GameObject.FindGameObjectWithTag(WaveEditor.SpawnObjectTag).transform.position;
             }
 
             private Texture GetCreepIcon(string name)
@@ -663,7 +667,8 @@ public class WaveEditor
             {
                 var go = WaveEditorHelper.BuildBareMeshCopy(prefab);
                 go.name = AddPreviewSuffix(go.name);
-                go.transform.position = GameObject.FindGameObjectWithTag(WaveEditor.SpawnObjectTag).transform.position;
+
+                go.transform.position = new Vector3(SpawnPosition.x, go.transform.position.y, SpawnPosition.z);
 
                 _PreviewObjects.Add(go);
                 SaveCurrentSpawnData();

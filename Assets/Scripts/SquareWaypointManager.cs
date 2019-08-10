@@ -49,7 +49,7 @@ public class SquareWaypointManager : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (Waypoints.Count > 1)
+        if (Waypoints != null && Waypoints.Count > 1)
         {
             DrawPathsRecursively(Waypoints.First());
         }

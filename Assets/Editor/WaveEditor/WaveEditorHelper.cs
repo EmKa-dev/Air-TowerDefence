@@ -26,7 +26,6 @@ internal static class WaveEditorHelper
     {
         var go = new GameObject(original.name);
 
-
         go.transform.localScale = original.transform.lossyScale;
 
         var meshf = go.AddComponent<MeshFilter>();

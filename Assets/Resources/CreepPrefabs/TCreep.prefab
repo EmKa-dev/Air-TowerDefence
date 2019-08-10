@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 10
-  Speed: 0.008
+  Speed: 1
   TargetWayPoint: {fileID: 0}
   TargetPositionInWorldSpace: {x: 0, y: 0, z: 0}
-  RelativePosition: {x: 0, y: 0, z: 0}
+  RelativePositionToWayPoint: {x: 0, y: 0, z: 0}
