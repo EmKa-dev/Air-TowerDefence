@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5375210342600201551}
   - component: {fileID: 1847632776581032374}
   - component: {fileID: 3913683756308537842}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Figure1
-  m_TagString: TCreep
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

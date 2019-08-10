@@ -1,2 +1,1 @@
-﻿* Replace GUI button "save current spawn" with auto-saving on all changes.
-* Remove move handles for the spawn object. Shouldn't be able to be moved when editing.
+﻿

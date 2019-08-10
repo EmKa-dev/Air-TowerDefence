@@ -638,7 +638,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WavesContainer:
-    Waves: []
+    Waves:
+    - Spawns:
+      - SpawnData:
+        - CreepIdentifier: Figure1
+          RelativePosition: {x: 1.07, y: 0, z: 0}
+        - CreepIdentifier: Figure1
+          RelativePosition: {x: -0.91, y: 0, z: 0}
+        _TimeToNext: 4
+      - SpawnData:
+        - CreepIdentifier: TCreep
+          RelativePosition: {x: 1.03, y: 0, z: -0.72}
+        - CreepIdentifier: Figure1
+          RelativePosition: {x: 0, y: 0, z: 0}
+        _TimeToNext: 0
 --- !u!1 &988375844
 GameObject:
   m_ObjectHideFlags: 0

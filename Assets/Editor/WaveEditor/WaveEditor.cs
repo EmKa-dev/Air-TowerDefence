@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 public class WaveEditor
 {
-    public const string _SpawnObjectTag = "Spawnpoint";
+    public const string SpawnObjectTag = "Spawnpoint";
 
     [MenuItem("Editor/Wave editor")]
     public static void BeginWaveEditing()
@@ -14,7 +15,7 @@ public class WaveEditor
         //Save current scene
         EditorSceneManager.SaveOpenScenes();
 
-        GameObject originalspawnobject = GameObject.FindGameObjectWithTag(_SpawnObjectTag);
+        GameObject originalspawnobject = GameObject.FindGameObjectWithTag(SpawnObjectTag);
 
         if (originalspawnobject == null)
         {
@@ -31,18 +32,22 @@ public class WaveEditor
         }
 
         //Pre-setup for wave editor scene.
-        GameObject SpawnObjectCopy = WaveEditorHelper.BuildUnmovableMeshCopy(originalspawnobject, "Spawn", originalspawnobject.tag);
+        GameObject spawnobjectcopy = WaveEditorHelper.BuildBareMeshCopy(originalspawnobject);
+        spawnobjectcopy.name = "Spawn-Preview";
+        spawnobjectcopy.tag = SpawnObjectTag;
 
-        SpawnObjectCopy.transform.position = originalspawnobject.transform.position;
+        spawnobjectcopy.AddComponent<ImmutableGameObject>();
 
-        HideAllObjectsExcept(SpawnObjectCopy, originalwavesmanager.gameObject);
-        Selection.activeGameObject = SpawnObjectCopy;
+        spawnobjectcopy.transform.position = originalspawnobject.transform.position;
+
+        HideAllObjectsExcept(spawnobjectcopy, originalwavesmanager.gameObject);
+        Selection.activeGameObject = spawnobjectcopy;
         SceneView.lastActiveSceneView.FrameSelected();
 
         var editorgui = new WaveEditorSceneContext(originalwavesmanager.WavesContainer, () =>
         {
             RestoreOriginalScene();
-            GameObject.DestroyImmediate(SpawnObjectCopy);
+            GameObject.DestroyImmediate(spawnobjectcopy);
         });
     }
 
@@ -274,6 +279,7 @@ public class WaveEditor
                     _Context._WavesContainer.Waves.Clear();
                 }
             }
+
             private void RenderButtons_EditWave()
             {
 
@@ -313,7 +319,7 @@ public class WaveEditor
             {
                 var wave = new Wave();
 
-                _Context._WavesContainer.AddWave(wave);
+                _Context._WavesContainer.Waves.Add(wave);
             }
         }
 
@@ -502,11 +508,14 @@ public class WaveEditor
             int Rows => WaveEditorHelper.CalculateRows(Columns, _CreepPrefabs.Length);
 
             bool _PreviewRendered = false;
+            List<GameObject> _PreviewObjects = new List<GameObject>();
+
+            const string PreviewObjectSuffix = "-Preview";
 
             public SpawnEditingScene(WaveEditorSceneContext context)
             {
                 _CreepPrefabs = Resources.LoadAll("CreepPrefabs").Cast<GameObject>().ToArray();
-
+                
                 _Context = context;
 
                 ReturnButtonStyle = _Context._EditorGUISkin.GetStyle("ReturnButton");
@@ -529,6 +538,11 @@ public class WaveEditor
                     SetupSpawnPreview();
                 }
 
+                if (_PreviewObjects.Any(x => x.transform.hasChanged == true))
+                {
+                    SaveCurrentSpawnData();
+                }
+
                 GUILayout.BeginArea(ViewNavigationSection);
                 {
                     RenderNavigationSection();
@@ -538,12 +552,6 @@ public class WaveEditor
                 GUILayout.BeginArea(DeleteButtonSection);
                 {
                     RenderDeleteButtonSection();
-                }
-                GUILayout.EndArea();
-
-                GUILayout.BeginArea(SaveButtonSection);
-                {
-                    RenderSaveButtonSection();
                 }
                 GUILayout.EndArea();
 
@@ -597,14 +605,6 @@ public class WaveEditor
                 }
             }
 
-            private void RenderSaveButtonSection()
-            {
-                if (GUILayout.Button("Save current spawn", SaveButtonStyle))
-                {
-                    SaveCurrentSpawnData();
-                }
-            }
-
             private void RenderDeleteButtonSection()
             {
                 if (GUILayout.Button("Delete this spawn", DeleteButtonStyle))
@@ -650,9 +650,7 @@ public class WaveEditor
 
                             if (GUILayout.Button(c, CreepButtonStyle))
                             {
-                                var go = PrefabUtility.InstantiatePrefab(_CreepPrefabs[i + z]) as GameObject;
-                                go.transform.position = GameObject.FindGameObjectWithTag(WaveEditor._SpawnObjectTag).transform.position;
-                                PrefabUtility.UnpackPrefabInstance(go, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+                                SpawnEditorPreviewCreep(_CreepPrefabs[i + z] as GameObject);
                             }
                         }
                     }
@@ -661,42 +659,58 @@ public class WaveEditor
                 }
             }
 
+            private void SpawnEditorPreviewCreep(GameObject prefab)
+            {
+                var go = WaveEditorHelper.BuildBareMeshCopy(prefab);
+                go.name = AddPreviewSuffix(go.name);
+                go.transform.position = GameObject.FindGameObjectWithTag(WaveEditor.SpawnObjectTag).transform.position;
+
+                _PreviewObjects.Add(go);
+                SaveCurrentSpawnData();
+            }
+
             private void SaveCurrentSpawnData()
             {
                 _Context._SelectedSpawn.SpawnData.Clear();
 
-                //TODO so something about this tag search
-                var gos = GameObject.FindGameObjectsWithTag("TCreep");
-                foreach (var creep in gos)
+                foreach (var creep in _PreviewObjects)
                 {
-                    var spawntransform = GameObject.FindGameObjectWithTag(WaveEditor._SpawnObjectTag).transform;
+                    var spawntransform = GameObject.FindGameObjectWithTag(WaveEditor.SpawnObjectTag).transform;
 
                     var relativecreeppos = spawntransform.InverseTransformPoint(creep.transform.position);
-                    _Context._SelectedSpawn.SpawnData.Add(new SpawnData() { CreepIdentifier = creep.name, RelativePosition = relativecreeppos });
+
+                    SpawnData data;
+                    data.CreepIdentifier = RemovePreviewSuffix(creep.name);
+                    data.RelativePosition = relativecreeppos;
+
+                    _Context._SelectedSpawn.SpawnData.Add(data);
                 }
             }
 
             private void DeleteThisSpawn()
             {
-                _Context._SelectedWave.Spawns.Remove(_Context._SelectedSpawn);
                 ClearSpawnPreview();
-                _Context.SwitchView<WaveEditingScene>(_Context._SelectedWave);
 
+                _Context._SelectedWave.Spawns.Remove(_Context._SelectedSpawn);
+                _Context.SwitchView<WaveEditingScene>(_Context._SelectedWave);
             }
+
             private void SetupSpawnPreview()
             {
-                if (_Context._SelectedSpawn != null && !_PreviewRendered)
+                if (!_PreviewRendered)
                 {
-                    foreach (var spawn in _Context._SelectedSpawn.SpawnData)
+                    foreach (var datapoint in _Context._SelectedSpawn.SpawnData)
                     {
+                        var preview = WaveEditorHelper.BuildBareMeshCopy(_CreepPrefabs.Single(x => x.name == datapoint.CreepIdentifier));
+                        preview.name = AddPreviewSuffix(preview.name);
 
-                        var creep = PrefabUtility.InstantiatePrefab(Resources.Load($"CreepPrefabs/{spawn.CreepIdentifier}")) as GameObject;
-                        PrefabUtility.UnpackPrefabInstance(creep, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+                        var spawntransform = GameObject.FindGameObjectWithTag(WaveEditor.SpawnObjectTag).transform;
 
-                        var spawntransform = GameObject.FindGameObjectWithTag(WaveEditor._SpawnObjectTag).transform;
+                        var relativecreeppos = spawntransform.TransformPoint(datapoint.RelativePosition);
 
-                        var relativecreeppos = spawntransform.TransformPoint(spawn.RelativePosition);
-                        creep.transform.position = relativecreeppos;
+                        preview.transform.position = relativecreeppos;
+
+                        _PreviewObjects.Add(preview);
                     }
 
                     _PreviewRendered = true;
@@ -705,17 +719,31 @@ public class WaveEditor
 
             private void ClearSpawnPreview()
             {
-
-                var gos = GameObject.FindGameObjectsWithTag("TCreep");
-
-                //Remove the gos used to create spawndata
-                foreach (var go in gos)
+                foreach (var go in _PreviewObjects)
                 {
                     GameObject.DestroyImmediate(go);
                 }
 
+                _PreviewObjects.Clear();
+
                 _PreviewRendered = false;
+            }
+
+            private string AddPreviewSuffix(string orginalname)
+            {
+                return string.Concat(orginalname, PreviewObjectSuffix);
+            }
+            private string RemovePreviewSuffix(string orginalname)
+            {
+                if (orginalname.Contains(PreviewObjectSuffix))
+                {
+                    return orginalname.Split(PreviewObjectSuffix[0])[0];
+                }
+
+                return orginalname;
             }
         }
     }
+
+
 }

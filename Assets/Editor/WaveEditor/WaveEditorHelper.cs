@@ -22,10 +22,12 @@ internal static class WaveEditorHelper
         return rows;
     }
 
-    internal static GameObject BuildUnmovableMeshCopy(GameObject original, string name, string tag = "Untagged")
+    internal static GameObject BuildBareMeshCopy(GameObject original)
     {
-        var go = new GameObject("SpawnCopy");
-        go.tag = tag;
+        var go = new GameObject(original.name);
+
+
+        go.transform.localScale = original.transform.lossyScale;
 
         var meshf = go.AddComponent<MeshFilter>();
         meshf.mesh = original.GetComponent<MeshFilter>().sharedMesh;
@@ -33,7 +35,6 @@ internal static class WaveEditorHelper
         var rend = go.AddComponent<MeshRenderer>();
         rend.material = original.GetComponent<MeshRenderer>().sharedMaterial;
 
-        go.AddComponent<ImmutableGameObject>();
         return go;
     }
 }
