@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 public class ImmutableGameObject : MonoBehaviour
 {
     private Vector3 OriginalPosition;
@@ -43,12 +43,18 @@ public class ImmutableGameObject : MonoBehaviour
 
     private void DisableToolHandlersIfSelected()
     {
-        Tools.hidden = Selection.activeGameObject == this.gameObject ? true : false;
+        if (!Application.IsPlaying(this))
+        {
+            Tools.hidden = Selection.activeGameObject == this.gameObject ? true : false;
+        }
 
     }
 
     private void OnDestroy()
     {
-        Tools.hidden = false;
+        if (!Application.IsPlaying(this))
+        {
+            Tools.hidden = false;
+        }
     }
 }

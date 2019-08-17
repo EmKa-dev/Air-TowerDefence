@@ -33,7 +33,6 @@ public class SquareWaypointManager : MonoBehaviour
         AddNewWaypointAndCreateLink(obj.GetComponent<SquareWaypoint>());
 
         obj.name = $"Waypoint {Waypoints.Count}";
-        Selection.activeGameObject = obj;
     }
 
     private void AddNewWaypointAndCreateLink(SquareWaypoint latestwaypoint)

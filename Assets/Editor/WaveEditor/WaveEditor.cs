@@ -680,6 +680,11 @@ public class WaveEditor
 
                 foreach (var creep in _PreviewObjects)
                 {
+                    if (creep == null)
+                    {
+                        continue;
+                    }
+
                     var spawntransform = GameObject.FindGameObjectWithTag(WaveEditor.SpawnObjectTag).transform;
 
                     var relativecreeppos = spawntransform.InverseTransformPoint(creep.transform.position);

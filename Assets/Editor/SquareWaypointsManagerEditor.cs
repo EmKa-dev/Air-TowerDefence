@@ -23,6 +23,7 @@ public class SquareWaypointsManagerEditor : Editor
         if (GUILayout.Button(buttontext))
         {
             manager.CreateNewWaypoint();
+            Selection.activeGameObject = manager.Waypoints.Last().gameObject;
         }
     }
 

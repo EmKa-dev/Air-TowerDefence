@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5375210342600201551}
   - component: {fileID: 1847632776581032374}
   - component: {fileID: 3913683756308537842}
+  - component: {fileID: -1910507175521024661}
   m_Layer: 10
   m_Name: Figure1
   m_TagString: Untagged
@@ -95,3 +96,16 @@ MonoBehaviour:
   TargetWayPoint: {fileID: 0}
   TargetPositionInWorldSpace: {x: 0, y: 0, z: 0}
   RelativePositionToWayPoint: {x: 0, y: 0, z: 0}
+--- !u!65 &-1910507175521024661
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115064115972087146}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8320799, y: 1.7996008, z: 0.7698685}
+  m_Center: {x: 0.034349993, y: 0.8988662, z: 0.29857326}

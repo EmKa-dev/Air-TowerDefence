@@ -1,14 +1,12 @@
 {
-    "name": "Tests",
+    "name": "PlayTests",
     "references": [
-        "Scripts"
+        "GUID:e6d86f41bbfd40f4f99dcd00325c4c42"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
