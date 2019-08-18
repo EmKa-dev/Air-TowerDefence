@@ -4,14 +4,12 @@ using UnityEngine;
 public class SingleTargetter : MonoBehaviour
 {
     [Header("Attributes")]
-    [SerializeField]
-    private float Range;
 
-    [SerializeField]
-    private float SearchRate;
+    public float Range;
 
-    [SerializeField]
-    private float FireRate;
+    public float SearchRate;
+
+    public float FireRate;
 
     [Header("Setup")]
 
@@ -27,15 +25,15 @@ public class SingleTargetter : MonoBehaviour
     [Header("VisualTesting")]
 
     [SerializeField]
-    private Transform Target;
+    public Transform Target;
 
     [SerializeField]
     private Collider[] CandiateResults;
 
     private int CreepLayerMask;
-    private float FireTimer = 0;
+    private float FireTimer = 1;
 
-    void Start()
+    void Awake()
     {
         CreepLayerMask = LayerMask.GetMask("Creep");
         CandiateResults = new Collider[10];
@@ -44,6 +42,8 @@ public class SingleTargetter : MonoBehaviour
 
     void Update()
     {
+        FireTimer -= Time.deltaTime;
+
         if (Target == null)
         {
             return;
@@ -56,8 +56,6 @@ public class SingleTargetter : MonoBehaviour
             FireProjectile();
             FireTimer = FireRate;
         }
-
-        FireTimer -= Time.deltaTime;
     }
 
     private void RotateTowardsTarget()

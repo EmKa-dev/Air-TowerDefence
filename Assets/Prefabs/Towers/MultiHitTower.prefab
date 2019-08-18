@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Range: 16
   SearchRate: 2
-  FireRate: 2
+  FireRate: 3
   TargetsAmount: 3
   TurretMesh: {fileID: 6574634253094596400}
   Muzzle: {fileID: 6574634251898010677}

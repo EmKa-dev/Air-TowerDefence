@@ -34,7 +34,7 @@ public class MultiTargetter : MonoBehaviour
     private Collider[] CandiateResults;
 
     private int CreepLayerMask;
-    private float FireTimer = 0;
+    private float FireTimer = 1;
 
     void Awake()
     {
@@ -46,6 +46,7 @@ public class MultiTargetter : MonoBehaviour
 
     void Update()
     {
+        FireTimer -= Time.deltaTime;
         if (Targets.All(x => x == null))
         {
             return;
@@ -59,7 +60,6 @@ public class MultiTargetter : MonoBehaviour
             FireTimer = FireRate;
         }
 
-        FireTimer -= Time.deltaTime;
     }
 
     private void RotateTowardsTarget()
@@ -77,10 +77,11 @@ public class MultiTargetter : MonoBehaviour
 
     public void UpdateTargets()
     {
-        Physics.OverlapSphereNonAlloc(transform.position, Range, CandiateResults, CreepLayerMask);
+        // Note: If overlapsphere finds nothing, nothing in the buffer gets overwritten,
+        // which means a previous candidate might have moved out of range, but still remain in the buffer.
+        // therefore we must do rangechecks even though one would assume the buffer only contains results within range..
 
-        //var orderedlistofvalidtargets = CandiateResults.Where(z => z != null && Vector3.Distance(transform.position, z.transform.position) <= Range)
-        //    .OrderByDescending(x => Vector3.Distance(transform.position, x.transform.position)).ToArray();
+        Physics.OverlapSphereNonAlloc(transform.position, Range, CandiateResults, CreepLayerMask);
 
         for (int i = 0; i < Targets.Length; i++)
         {
@@ -90,55 +91,33 @@ public class MultiTargetter : MonoBehaviour
                 continue;
             }
 
-            Targets[i] = FindNearestAndRemoveFromCandidates();
+            Targets[i] = FindValidTargetFromCandidatesOrNullIfNone();
         }
 
-        Transform FindNearestAndRemoveFromCandidates()
+        Transform FindValidTargetFromCandidatesOrNullIfNone()
         {
-            float shortestdistance = Mathf.Infinity;
-
-            int nearestenemyindex = -1;
-            Collider nearestenemy = null;
-
-
             for (int i = 0; i < CandiateResults.Length; i++)
             {
 
-                if (CandiateResults[i] != null)
+                if (CandiateResults[i] != null && IsThisWithinRange() && !IsThisTakenByAnotherSlot())
                 {
-                    var distancetoenemy = Vector3.Distance(transform.position, CandiateResults[i].transform.position);
+                    return CandiateResults[i].transform;
+                }
 
-                    if (distancetoenemy < shortestdistance)
-                    {
-                        shortestdistance = distancetoenemy;
-                        nearestenemy = CandiateResults[i];
-                        nearestenemyindex = i;
-                    }
+
+                bool IsThisWithinRange()
+                {
+                    return Vector3.Distance(transform.position, CandiateResults[i].transform.position) <= Range;
+                }
+
+                bool IsThisTakenByAnotherSlot()
+                {
+                    return Targets.Any(x => Object.ReferenceEquals(x, CandiateResults[i].transform));
                 }
             }
 
-            if (nearestenemy != null && shortestdistance <= Range && !IsThisTakenByAnotherSlot())
-            {
-                CandiateResults[nearestenemyindex] = null;
-                return  nearestenemy.transform;
-            }
-            else
-            {
-                return  null;
-            }
-
-            bool IsThisTakenByAnotherSlot()
-            {
-                if (Targets.Any(x => Object.ReferenceEquals(x, nearestenemy.transform)))
-                {
-                    return true;
-                }
-
-                return false;
-            }
+            return null;
         }
-
-
     }
 
     private void FireProjectiles()

@@ -18,20 +18,17 @@ namespace Tests
             var t = SetupBehaviourAndCleanScene();
 
             t.UpdateTargets();
-            Assert.True(t.Targets.Where(x => x != null).Count() == 0);
 
-            CleanupScene();
+            Assert.True(t.Targets.Where(x => x != null).Count() == 0);
         }
 
         [Test]
         public void OneTargetOutOfRange_ShouldNotDetectTarget()
         {
             var t = SetupBehaviourAndCleanScene();
-
             var creep = SetupCreep();
 
-            //Move target out of range
-            creep.transform.position = Vector3.one * 1000;
+            MoveGameObjectOutOfRange(creep);
 
             t.UpdateTargets();
 
@@ -59,12 +56,11 @@ namespace Tests
 
             if (t.Targets.Where(x => x != null).Count() == 1)
             {
-                //Moves creep out of range
-                MoveTransformOutOfRange(creep.transform);
+                MoveGameObjectOutOfRange(creep);
 
                 t.UpdateTargets();
 
-                Assert.True(t.Targets.Where(x => x != null).Count() == 0);
+                Assert.True(t.Targets.All(x => x == null));
             }
             else
             {
@@ -105,7 +101,7 @@ namespace Tests
 
             if (t.Targets.Where(x => x != null).Count() == 3)
             {
-                MoveTransformOutOfRange(creeps.First().transform);
+                MoveGameObjectOutOfRange(creeps.First());
 
                 t.UpdateTargets();
 
@@ -215,18 +211,6 @@ namespace Tests
             }
         }
 
-        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-        // `yield return null;` to skip a frame.
-        [UnityTest]
-        public IEnumerator MultiTargetTestsWithEnumeratorPasses()
-        {
-            // Use the Assert class to test conditions.
-            Assert.IsFalse(false);
-
-            // Use yield to skip a frame.
-            yield return null;
-        }
-
         private MultiTargetter SetupBehaviourAndCleanScene()
         {
             CleanupScene();
@@ -240,24 +224,28 @@ namespace Tests
 
         private GameObject SetupCreep()
         {
-            var creep = new GameObject($"TestCreep{GameObject.FindObjectsOfType<GameObject>().Count() + 1}");
+            var creep = new GameObject($"TestCreep{GameObject.FindObjectsOfType<GameObject>().Where(x => x.layer == 10).Count() + 1}");
             creep.layer = 10;
             creep.AddComponent<BoxCollider>();
 
             return creep;
         }
 
-        private void MoveTransformOutOfRange(Transform transform)
+        private void MoveGameObjectOutOfRange(GameObject gameobject)
         {
-            transform.position = Vector3.one * 5000;
+            gameobject.transform.position = Vector3.one * 5000;
+
+            //Apparently colliders positions doesn't get updated along with its gameobject
+            //in test playmode, so we need to move it manually
+
+            gameobject.GetComponent<BoxCollider>().center = Vector3.zero;
+
         }
 
         private void CleanupScene()
         {
-            Debug.Log("Cleaning up");
             foreach (var obj in GameObject.FindObjectsOfType<GameObject>())
             {
-
                 GameObject.DestroyImmediate(obj);
             }
         }
