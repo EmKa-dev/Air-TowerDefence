@@ -7,6 +7,9 @@ public class Projectile : MonoBehaviour
     private float ProjectileSpeed;
 
     [SerializeField]
+    private float Damage;
+
+    [SerializeField]
     private ParticleSystem HitEffect;
 
     private Transform Target;
@@ -40,6 +43,9 @@ public class Projectile : MonoBehaviour
 
     private void HitTarget()
     {
+        Target.GetComponent<IDamagable>().TakeDamage(Damage);
+
         Destroy(this.gameObject);
+        
     }
 }

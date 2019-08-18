@@ -91,4 +91,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProjectileSpeed: 10
+  Damage: 5
   HitEffect: {fileID: 0}

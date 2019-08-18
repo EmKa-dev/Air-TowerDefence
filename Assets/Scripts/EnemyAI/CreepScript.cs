@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CreepScript : MonoBehaviour
+public class CreepScript : MonoBehaviour, IDamagable
 {
-    public int Health;
+    [SerializeField]
+    private float Health;
 
-    public float Speed;
+    [SerializeField]
+    private float Speed;
 
     [SerializeField]
     private SquareWaypoint TargetWayPoint;
@@ -50,12 +52,10 @@ public class CreepScript : MonoBehaviour
 
     private void RotateTowardsTarget()
     {
-        Vector3 t;
-        t.x = TargetPositionInWorldSpace.x;
-        t.z = TargetPositionInWorldSpace.z;
-        t.y = transform.position.y;
+        Vector3 dir = TargetWayPoint.transform.position - transform.position;
 
-        transform.LookAt(t);
+        Quaternion lookrot = Quaternion.LookRotation(dir);
+        transform.rotation = lookrot;
     }
 
     private void GetNextTargetPosition()
@@ -66,5 +66,15 @@ public class CreepScript : MonoBehaviour
         }
 
         TargetPositionInWorldSpace = TargetWayPoint.transform.TransformPoint(RelativePositionToWayPoint);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        this.Health -= damage;
+
+        if (Health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

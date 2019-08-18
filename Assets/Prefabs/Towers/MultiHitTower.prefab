@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6574634251851929072}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.49, y: 2.9863563, z: 2.78}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6574634253134537209}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 6574634253094596401}
   - component: {fileID: 6574634253094596405}
   - component: {fileID: 6574634253094596404}
-  - component: {fileID: 6574634253094596407}
+  - component: {fileID: 366246533}
   m_Layer: 0
   m_Name: TTurret
   m_TagString: Untagged
@@ -141,7 +141,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &6574634253094596407
+--- !u!114 &366246533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,17 +150,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6574634253094596400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 181e6d0bf52991443a29d009bbbb5297, type: 3}
+  m_Script: {fileID: 11500000, guid: a61721d38a258d141b249512761046d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 9.33
+  Range: 16
   SearchRate: 2
   FireRate: 2
+  TargetsAmount: 3
   TurretMesh: {fileID: 6574634253094596400}
   Muzzle: {fileID: 6574634251898010677}
   ProjectilePrefab: {fileID: 1217916105462186486, guid: 9be9025f3212967468637985656327d6,
     type: 3}
-  Target: {fileID: 0}
+  Targets: []
   CandiateResults: []
 --- !u!1 &6574634253134537092
 GameObject:

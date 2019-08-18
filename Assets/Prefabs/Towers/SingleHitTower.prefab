@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181e6d0bf52991443a29d009bbbb5297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 9.33
+  Range: 19.66
   SearchRate: 2
   FireRate: 2
   TurretMesh: {fileID: 2655108371555086930}
@@ -187,7 +187,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2655108372460030099}
   m_Layer: 0
-  m_Name: Tower
+  m_Name: SingleHitTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2655108372460030098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.49, y: 2.9863563, z: 2.78}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2655108371095911579}
