@@ -17,7 +17,7 @@ namespace Tests
         {
             var t = SetupBehaviourAndCleanScene();
 
-            t.UpdateTargets();
+            t.Search();
 
             Assert.True(t.Targets.Where(x => x != null).Count() == 0);
         }
@@ -30,7 +30,7 @@ namespace Tests
 
             MoveGameObjectOutOfRange(creep);
 
-            t.UpdateTargets();
+            t.Search();
 
             Assert.True(t.Targets.All(x => x == null));
         }
@@ -41,7 +41,7 @@ namespace Tests
             var t = SetupBehaviourAndCleanScene();
             var creep = SetupCreep();
 
-            t.UpdateTargets();
+            t.Search();
 
             Assert.True(t.Targets.Where(x => x != null).Count() == 1);
         }
@@ -52,13 +52,13 @@ namespace Tests
             var t = SetupBehaviourAndCleanScene();
             var creep = SetupCreep();
 
-            t.UpdateTargets();
+            t.Search();
 
             if (t.Targets.Where(x => x != null).Count() == 1)
             {
                 MoveGameObjectOutOfRange(creep);
 
-                t.UpdateTargets();
+                t.Search();
 
                 Assert.True(t.Targets.All(x => x == null));
             }
@@ -80,7 +80,7 @@ namespace Tests
                 SetupCreep()
             };
 
-            t.UpdateTargets();
+            t.Search();
 
             Assert.True(t.Targets.Where(x => x != null).Count() == 3);
         }
@@ -97,13 +97,13 @@ namespace Tests
                 SetupCreep()
             };
 
-            t.UpdateTargets();
+            t.Search();
 
             if (t.Targets.Where(x => x != null).Count() == 3)
             {
                 MoveGameObjectOutOfRange(creeps.First());
 
-                t.UpdateTargets();
+                t.Search();
 
                 Assert.True(t.Targets.Where(x => x != null).Count() == 2 && t.Targets.Where(z => z == null).Count() == 1);
             }
@@ -120,11 +120,11 @@ namespace Tests
             var creep = SetupCreep();
 
             //Detect one creep
-            t.UpdateTargets();
+            t.Search();
 
             if (t.Targets.Any(x => object.ReferenceEquals(creep.transform, x)))
             {
-                t.UpdateTargets();
+                t.Search();
 
                 bool noduplicate = t.Targets.Where(z => object.ReferenceEquals(creep.transform, z)).Count() == 1;
 
@@ -142,7 +142,7 @@ namespace Tests
             var t = SetupBehaviourAndCleanScene();
             var creep = SetupCreep();
 
-            t.UpdateTargets();
+            t.Search();
 
             var firsttargetindex = Array.IndexOf(t.Targets, creep.transform);
 
@@ -157,7 +157,7 @@ namespace Tests
                 creep.transform.position = Vector3.one;
 
                 //Now 4 is withinrange
-                t.UpdateTargets();
+                t.Search();
 
                 if (t.Targets.Where(x => x != null).Count() == 3)
                 {
@@ -189,7 +189,7 @@ namespace Tests
                 creeps.Add(cri);
             }
 
-            t.UpdateTargets();
+            t.Search();
 
             if (t.Targets.Where(x => x != null).Count() == t.Targets.Length)
             {

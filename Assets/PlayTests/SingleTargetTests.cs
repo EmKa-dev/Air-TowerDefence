@@ -17,7 +17,7 @@ namespace Tests
         {
             var t = SetupBehaviourAndCleanScene();
 
-            t.UpdateTarget();
+            t.Search();
 
             Assert.True(t.Target == null);
         }
@@ -30,7 +30,7 @@ namespace Tests
 
             MoveGameObjectOutOfRange(creep);
 
-            t.UpdateTarget();
+            t.Search();
 
             Assert.True(t.Target == null);
         }
@@ -41,7 +41,7 @@ namespace Tests
             var t = SetupBehaviourAndCleanScene();
             var creep = SetupCreep();
 
-            t.UpdateTarget();
+            t.Search();
 
             Assert.True(t.Target != null);
         }
@@ -52,13 +52,13 @@ namespace Tests
             var t = SetupBehaviourAndCleanScene();
             var creep = SetupCreep();
 
-            t.UpdateTarget();
+            t.Search();
 
             if (t.Target != null)
             {
                 MoveGameObjectOutOfRange(creep);
 
-                t.UpdateTarget();
+                t.Search();
 
                 Assert.True(t.Target == null);
             }
@@ -74,7 +74,7 @@ namespace Tests
             var t = SetupBehaviourAndCleanScene();
             var creep = SetupCreep();
 
-            t.UpdateTarget();
+            t.Search();
 
             if (t.Target != null)
             {
@@ -87,7 +87,7 @@ namespace Tests
                 creep.transform.position = Vector3.one;
 
                 //Now 4 is withinrange
-                t.UpdateTarget();
+                t.Search();
 
                 if (t.Target != null)
                 {
@@ -119,7 +119,7 @@ namespace Tests
                 creeps.Add(cri);
             }
 
-            t.UpdateTarget();
+            t.Search();
 
             if (t.Target != null)
             {
