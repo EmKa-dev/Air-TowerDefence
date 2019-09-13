@@ -16,8 +16,6 @@ public class AttackOrchestrator : MonoBehaviour
 
     protected ILauncher _Launcher;
 
-    private Action OnFireAction;
-
     private float FireTimer;
 
     private void Awake()
