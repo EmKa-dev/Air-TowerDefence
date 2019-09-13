@@ -5,7 +5,7 @@ public class HomingMissileProjectile : MonoBehaviour, IProjectile
 {
 
     [SerializeField]
-    private ParticleSystem HitEffect;
+    private ParticleSystem _HitEffect;
 
     private Transform _Target;
 
@@ -13,6 +13,7 @@ public class HomingMissileProjectile : MonoBehaviour, IProjectile
 
     private float _Speed;
 
+    [SerializeField]
     private Vector3 _LastKnownTargetPosition;
 
     public void Initialize(Transform target, float damage, float speed)
@@ -59,6 +60,12 @@ public class HomingMissileProjectile : MonoBehaviour, IProjectile
 
     private void Explode()
     {
+        if (_HitEffect != null)
+        {
+            var effect = Instantiate(_HitEffect, _LastKnownTargetPosition + (Vector3.up * 0.5f), Quaternion.identity);
+            effect.Play();
+        }
+
         Destroy(gameObject);
     }
 

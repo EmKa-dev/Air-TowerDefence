@@ -212,6 +212,25 @@ Transform:
   m_Father: {fileID: 509588748}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &240398043 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6574634253094596400, guid: 2edd86658ad072544938800db9ca4f63,
+    type: 3}
+  m_PrefabInstance: {fileID: 1333193992}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &240398048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240398043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ecf09f375f6c34aa4bdc5d5b5ce2d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FireRate: 0
 --- !u!1 &325839898
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,7 +799,7 @@ PrefabInstance:
     - target: {fileID: 2655108372460030098, guid: 21dcd7ccb99046141b14432ca969f022,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2655108372460030099, guid: 21dcd7ccb99046141b14432ca969f022,
         type: 3}
@@ -1143,6 +1162,10 @@ PrefabInstance:
       propertyPath: Range
       value: 22.94
       objectReference: {fileID: 0}
+    - target: {fileID: 366246533, guid: 2edd86658ad072544938800db9ca4f63, type: 3}
+      propertyPath: _TurretMesh
+      value: 
+      objectReference: {fileID: 240398043}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2edd86658ad072544938800db9ca4f63, type: 3}
 --- !u!1 &1433305911 stripped
@@ -1255,6 +1278,7 @@ GameObject:
   - component: {fileID: 1687258582}
   - component: {fileID: 1687258586}
   - component: {fileID: 1687258583}
+  - component: {fileID: 1687258587}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1269,7 +1293,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &1687258583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1427,6 +1451,26 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &1687258587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687258581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_RendererOverrideOption: 1
+  m_RendererData: {fileID: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &1734305742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1796,7 +1840,7 @@ PrefabInstance:
     - target: {fileID: 9087216910545757461, guid: 71b85d6c4ae2242428611567ddf69bb7,
         type: 3}
       propertyPath: FireRate
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71b85d6c4ae2242428611567ddf69bb7, type: 3}

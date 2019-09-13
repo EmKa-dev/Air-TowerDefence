@@ -23,6 +23,7 @@ public class SimpleProjectile : MonoBehaviour, IProjectile
     {
         if (Target == null)
         {
+            Destroy(gameObject);
             return;
         }
 
