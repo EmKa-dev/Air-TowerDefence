@@ -7,14 +7,18 @@ public class HomingMissileProjectile : MonoBehaviour, IProjectile
     [SerializeField]
     private ParticleSystem _HitEffect;
 
+    [SerializeField]
+    private GameObject _TargetMarkerPrefab;
+
     private Transform _Target;
 
     private float _Damage;
 
     private float _Speed;
 
-    [SerializeField]
     private Vector3 _LastKnownTargetPosition;
+
+    private GameObject _MarkerObject;
 
     public void Initialize(Transform target, float damage, float speed)
     {
@@ -22,6 +26,7 @@ public class HomingMissileProjectile : MonoBehaviour, IProjectile
         _Damage = damage;
         _Speed = speed;
         _LastKnownTargetPosition = target.position;
+        CreateMarkerAtTarget();
     }
 
     public void Initialize(Vector3 lastknownposition, float damage, float speed)
@@ -29,6 +34,7 @@ public class HomingMissileProjectile : MonoBehaviour, IProjectile
         _Damage = damage;
         _Speed = speed;
         _LastKnownTargetPosition = lastknownposition;
+        CreateMarkerAtTarget();
     }
 
     void Update()
@@ -39,6 +45,16 @@ public class HomingMissileProjectile : MonoBehaviour, IProjectile
             _LastKnownTargetPosition = _Target.position;
         }
 
+        TrackTarget();
+
+    }
+    private void CreateMarkerAtTarget()
+    {
+        _MarkerObject = Instantiate(_TargetMarkerPrefab, _LastKnownTargetPosition, _TargetMarkerPrefab.transform.rotation);
+    }
+
+    private void TrackTarget()
+    {
         Vector3 dir = _LastKnownTargetPosition - transform.position;
         float step = _Speed * Time.deltaTime;
 
@@ -50,7 +66,9 @@ public class HomingMissileProjectile : MonoBehaviour, IProjectile
             transform.rotation = lookrot;
             transform.Rotate(90, 0, 0);
 
+
             transform.Translate(dir.normalized * step, Space.World);
+            _MarkerObject.transform.position = _LastKnownTargetPosition + Vector3.up * 0.1f;
 
             return;
         }
@@ -67,6 +85,7 @@ public class HomingMissileProjectile : MonoBehaviour, IProjectile
         }
 
         Destroy(gameObject);
+        Destroy(_MarkerObject);
     }
 
     private void HitTarget()
