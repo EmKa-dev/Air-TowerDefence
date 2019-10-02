@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 internal static class WaveEditorHelper
 {
-    internal static int CalculateRows(int columns, int buttonscount)
+    internal static int CalculateRows(int columns, int elementsamount)
     {
-        int buttonstodraw = buttonscount;
+        int buttonstodraw = elementsamount;
 
         int rows = 0;
 
@@ -24,16 +25,31 @@ internal static class WaveEditorHelper
 
     internal static GameObject BuildBareMeshCopy(GameObject original)
     {
-        var go = new GameObject(original.name);
+
+        var go = GameObject.Instantiate(original);
+        go.name = original.name;
 
         go.transform.localScale = original.transform.lossyScale;
 
-        var meshf = go.AddComponent<MeshFilter>();
-        meshf.mesh = original.GetComponent<MeshFilter>().sharedMesh;
-
-        var rend = go.AddComponent<MeshRenderer>();
-        rend.material = original.GetComponent<MeshRenderer>().sharedMaterial;
+        RemoveAllComponentsExceptMeshFilterAndMeshRenderInTransformTree(go.transform);
 
         return go;
+
+        void RemoveAllComponentsExceptMeshFilterAndMeshRenderInTransformTree(Transform Root)
+        {
+            var components = go.GetComponentsInChildren<Component>();
+
+            foreach (var component in components)
+            {
+                var componenttype = component.GetType();
+
+                if (componenttype != typeof(MeshFilter) && componenttype != typeof(MeshRenderer) && componenttype != typeof(Transform))
+                {
+                    Object.DestroyImmediate(component);
+                }
+            }
+        }
     }
+
+
 }
