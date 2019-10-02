@@ -7,11 +7,15 @@ using UnityEngine;
 
 public class Launcher: MonoBehaviour, ILauncher
 {
+    //[Header("Attributes")]
+
     [SerializeField]
     protected float _Damage;
 
     [SerializeField]
     protected float _ProjectileSpeed;
+
+    //[Header("Setup")]
 
     [SerializeField]
     protected Transform _Muzzle;
@@ -19,6 +23,7 @@ public class Launcher: MonoBehaviour, ILauncher
     [SerializeField]
     protected GameObject _ProjectilePrefab;
 
+    public event Action Launch;
 
     public virtual void Fire(Transform[] targets)
     {
@@ -43,6 +48,13 @@ public class Launcher: MonoBehaviour, ILauncher
     {
         var bullet = Instantiate(_ProjectilePrefab, _Muzzle.position, _Muzzle.rotation);
         bullet.GetComponent<IProjectile>().Initialize(target, _Damage, _ProjectileSpeed);
+
+        OnLaunch();
+    }
+
+    protected void OnLaunch()
+    {
+        Launch?.Invoke();
     }
 }
 

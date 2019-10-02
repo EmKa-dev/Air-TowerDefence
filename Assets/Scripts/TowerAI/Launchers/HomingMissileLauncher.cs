@@ -19,9 +19,12 @@ public class HomingMissileLauncher : Launcher
             return;
         }
 
+        base.OnLaunch();
+
         var bullet = Instantiate(_ProjectilePrefab, _Muzzle.position, _Muzzle.rotation);
         bullet.GetComponent<HomingMissileProjectile>().enabled = false;
         StartCoroutine("ShootStraightUpBeforePursuit", (target, bullet));
+
     }
 
     private IEnumerator ShootStraightUpBeforePursuit((Transform target, GameObject bullet) tuple)
