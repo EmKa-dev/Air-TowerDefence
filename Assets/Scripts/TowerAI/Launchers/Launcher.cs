@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Launcher: MonoBehaviour, ILauncher
 {
-    //[Header("Attributes")]
+    [Header("Attributes")]
 
     [SerializeField]
     protected float _Damage;
@@ -15,7 +15,7 @@ public class Launcher: MonoBehaviour, ILauncher
     [SerializeField]
     protected float _ProjectileSpeed;
 
-    //[Header("Setup")]
+    [Header("Setup")]
 
     [SerializeField]
     protected Transform _Muzzle;
