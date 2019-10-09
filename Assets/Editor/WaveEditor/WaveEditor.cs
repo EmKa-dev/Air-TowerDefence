@@ -86,7 +86,6 @@ namespace AirTowerDefence.EditorTool
             return GameObject.FindObjectOfType<WavesManager>();
         }
 
-
         public sealed class WaveEditorSceneContext
         {
             private Action ExitEditingAction;

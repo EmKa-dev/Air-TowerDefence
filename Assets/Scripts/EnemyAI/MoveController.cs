@@ -1,46 +1,33 @@
-﻿using AirTowerDefence.Common;
+﻿using UnityEngine;
 using AirTowerDefence.EnemySpawn;
-using UnityEngine;
+using System;
 
-namespace AirTowerDefence.Enemy
+namespace AirTowerDefence.Enemy.Controllers
 {
-    public class CreepScript : MonoBehaviour, IDamagable
-    {
-        [SerializeField]
-        private float _Health;
 
+    public class MoveController : Controller
+    {
         [SerializeField]
         private float _Speed;
 
         private SquareWaypoint TargetWayPoint;
 
-        private Animator _Animator;
-
         private Vector3 TargetPositionInWorldSpace;
 
         private Vector3 RelativePositionToWayPoint;
 
-
-        private float aim;
-
         void Start()
         {
-            _Animator = transform.root.GetComponentInChildren<Animator>();
             FindSpawnPoint();
             TargetPositionInWorldSpace = transform.position;
             RelativePositionToWayPoint = TargetWayPoint.transform.InverseTransformPoint(transform.position);
+
+            InvokeRequestControl();
         }
 
-        void Update()
+        public override void UpdateControl()
         {
             MoveTowardTargetWayPoint();
-
-            //Testing code
-            if (_Animator != null)
-            {
-                aim = Mathf.PingPong(Time.time * 10, 90);
-                _Animator.SetFloat("AimingBlend", aim);
-            }
         }
 
         private void FindSpawnPoint()
@@ -77,16 +64,6 @@ namespace AirTowerDefence.Enemy
             }
 
             TargetPositionInWorldSpace = TargetWayPoint.transform.TransformPoint(RelativePositionToWayPoint);
-        }
-
-        public void TakeDamage(float damage)
-        {
-            this._Health -= damage;
-
-            if (_Health <= 0)
-            {
-                Destroy(this.gameObject);
-            }
         }
     }
 }

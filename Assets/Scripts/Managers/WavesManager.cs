@@ -6,10 +6,10 @@ namespace AirTowerDefence.Managers
 {
     public class WavesManager : MonoBehaviour
     {
-        CreepFactory _CreepFactory;
-        GameObject _Spawnpoint;
-
         public WavesContainer WavesContainer;
+
+        private CreepFactory _CreepFactory;
+        private GameObject _Spawnpoint;
 
         public int WaveIndex { get; private set; } = 0;
 

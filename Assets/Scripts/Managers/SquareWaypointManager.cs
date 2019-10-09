@@ -55,7 +55,6 @@ namespace AirTowerDefence.Managers
             }
         }
 
-
         private void DrawPathsRecursively(SquareWaypoint rootpoint)
         {
             if (rootpoint == null || rootpoint.Next == null)
