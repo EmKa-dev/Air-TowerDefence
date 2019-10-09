@@ -1,4 +1,7 @@
-﻿internal interface IWaveEditorState
+﻿namespace AirTowerDefence.EditorTool
 {
-    void RenderSceneGUI();
+    internal interface IWaveEditorState
+    {
+        void RenderSceneGUI();
+    }
 }

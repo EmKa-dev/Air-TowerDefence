@@ -1,42 +1,44 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using AirTowerDefence.Managers;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(SquareWaypointManager))]
-public class SquareWaypointsManagerEditor : Editor
+namespace AirTowerDefence.EditorTool
 {
-    SquareWaypointManager manager;
-
-    private void OnEnable()
+    [CustomEditor(typeof(SquareWaypointManager))]
+    public class SquareWaypointsManagerEditor : Editor
     {
-        manager = (SquareWaypointManager)target;
-    }
+        SquareWaypointManager manager;
 
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-
-        string buttontext = (manager.Waypoints.Count == 0) ? "Create spawnpoint" : "Create waypoint";
-
-        if (GUILayout.Button(buttontext))
+        private void OnEnable()
         {
-            manager.CreateNewWaypoint();
-            Selection.activeGameObject = manager.Waypoints.Last().gameObject;
+            manager = (SquareWaypointManager)target;
         }
-    }
 
-    private void OnSceneGUI()
-    {
-        if (manager.Waypoints.Any(x => x == null))
+        public override void OnInspectorGUI()
         {
-            RemoveDeletedWaypoints();
-        }
-    }
+            DrawDefaultInspector();
 
-    private void RemoveDeletedWaypoints()
-    {
-        manager.Waypoints.RemoveAll((x) => x == null);
+            string buttontext = (manager.Waypoints.Count == 0) ? "Create spawnpoint" : "Create waypoint";
+
+            if (GUILayout.Button(buttontext))
+            {
+                manager.CreateNewWaypoint();
+                Selection.activeGameObject = manager.Waypoints.Last().gameObject;
+            }
+        }
+
+        private void OnSceneGUI()
+        {
+            if (manager.Waypoints.Any(x => x == null))
+            {
+                RemoveDeletedWaypoints();
+            }
+        }
+
+        private void RemoveDeletedWaypoints()
+        {
+            manager.Waypoints.RemoveAll((x) => x == null);
+        }
     }
 }

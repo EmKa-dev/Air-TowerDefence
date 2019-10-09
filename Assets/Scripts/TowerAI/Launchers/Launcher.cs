@@ -1,60 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AirTowerDefence.Projectile;
+using System;
 using UnityEngine;
 
-public class Launcher: MonoBehaviour, ILauncher
+namespace AirTowerDefence.Tower
 {
-    [Header("Attributes")]
-
-    [SerializeField]
-    protected float _Damage;
-
-    [SerializeField]
-    protected float _ProjectileSpeed;
-
-    [Header("Setup")]
-
-    [SerializeField]
-    protected Transform _Muzzle;
-
-    [SerializeField]
-    protected GameObject _ProjectilePrefab;
-
-    public event Action Launch;
-
-    public virtual void Fire(Transform[] targets)
+    public class Launcher : MonoBehaviour, ILauncher
     {
-        for (int i = 0; i < targets.Length; i++)
+        [Header("Attributes")]
+
+        [SerializeField]
+        protected float _Damage;
+
+        [SerializeField]
+        protected float _ProjectileSpeed;
+
+        [Header("Setup")]
+
+        [SerializeField]
+        protected Transform _Muzzle;
+
+        [SerializeField]
+        protected GameObject _ProjectilePrefab;
+
+        public event Action Launch;
+
+        public virtual void Fire(Transform[] targets)
         {
-            if (targets[i] != null)
+            for (int i = 0; i < targets.Length; i++)
             {
-                FireProjectile(targets[i]);
+                if (targets[i] != null)
+                {
+                    FireProjectile(targets[i]);
+                }
             }
         }
-    }
 
-    public virtual void Fire(Transform target)
-    {
-        if (target != null)
+        public virtual void Fire(Transform target)
         {
-            FireProjectile(target);
+            if (target != null)
+            {
+                FireProjectile(target);
+            }
         }
-    }
 
-    private void FireProjectile(Transform target)
-    {
-        var bullet = Instantiate(_ProjectilePrefab, _Muzzle.position, _Muzzle.rotation);
-        bullet.GetComponent<IProjectile>().Initialize(target, _Damage, _ProjectileSpeed);
+        private void FireProjectile(Transform target)
+        {
+            var bullet = Instantiate(_ProjectilePrefab, _Muzzle.position, _Muzzle.rotation);
+            bullet.GetComponent<IProjectile>().Initialize(target, _Damage, _ProjectileSpeed);
 
-        OnLaunch();
-    }
+            OnLaunch();
+        }
 
-    protected void OnLaunch()
-    {
-        Launch?.Invoke();
+        protected void OnLaunch()
+        {
+            Launch?.Invoke();
+        }
     }
 }
 

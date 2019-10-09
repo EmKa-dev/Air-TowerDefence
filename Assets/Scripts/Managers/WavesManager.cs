@@ -1,48 +1,52 @@
-﻿using System.Collections;
+﻿using AirTowerDefence.EnemySpawn;
+using System.Collections;
 using UnityEngine;
 
-public class WavesManager : MonoBehaviour
+namespace AirTowerDefence.Managers
 {
-    CreepFactory _CreepFactory;
-    GameObject _Spawnpoint;
-
-    public WavesContainer WavesContainer;
-
-    public int WaveIndex { get; private set; } = 0;
-
-    private void Start()
+    public class WavesManager : MonoBehaviour
     {
-        _CreepFactory = new CreepFactory();
-        _Spawnpoint = GameObject.FindGameObjectWithTag("Spawnpoint");
+        CreepFactory _CreepFactory;
+        GameObject _Spawnpoint;
 
-        StartNextWave();
-    }
+        public WavesContainer WavesContainer;
 
-    public void StartNextWave()
-    {
-        StartCoroutine(StartWave(WavesContainer.Waves[WaveIndex]));
-        WaveIndex++;
-    }
+        public int WaveIndex { get; private set; } = 0;
 
-    IEnumerator StartWave(Wave wave)
-    {
-        yield return new WaitForSecondsRealtime(1f);
-
-        foreach (var spawn in wave.Spawns)
+        private void Start()
         {
-            SpawnCreeps(spawn);
+            _CreepFactory = new CreepFactory();
+            _Spawnpoint = GameObject.FindGameObjectWithTag("Spawnpoint");
 
-            yield return new WaitForSecondsRealtime(spawn.TimeToNext);
+            StartNextWave();
         }
-    }
 
-
-    private void SpawnCreeps(Spawn spawn)
-    {
-        foreach (var datapoint in spawn.SpawnData)
+        public void StartNextWave()
         {
-            var creep = Instantiate(_CreepFactory.GetCreepPrefab(datapoint.CreepIdentifier));
-            creep.transform.position = _Spawnpoint.transform.TransformPoint(datapoint.RelativePosition);
+            StartCoroutine(StartWave(WavesContainer.Waves[WaveIndex]));
+            WaveIndex++;
+        }
+
+        IEnumerator StartWave(Wave wave)
+        {
+            yield return new WaitForSecondsRealtime(1f);
+
+            foreach (var spawn in wave.Spawns)
+            {
+                SpawnCreeps(spawn);
+
+                yield return new WaitForSecondsRealtime(spawn.TimeToNext);
+            }
+        }
+
+
+        private void SpawnCreeps(Spawn spawn)
+        {
+            foreach (var datapoint in spawn.SpawnData)
+            {
+                var creep = Instantiate(_CreepFactory.GetCreepPrefab(datapoint.CreepIdentifier));
+                creep.transform.position = _Spawnpoint.transform.TransformPoint(datapoint.RelativePosition);
+            }
         }
     }
 }

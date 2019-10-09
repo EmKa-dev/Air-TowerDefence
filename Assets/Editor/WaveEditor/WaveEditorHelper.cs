@@ -1,55 +1,55 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-internal static class WaveEditorHelper
+namespace AirTowerDefence.EditorTool
 {
-    internal static int CalculateRows(int columns, int elementsamount)
+    internal static class WaveEditorHelper
     {
-        int buttonstodraw = elementsamount;
-
-        int rows = 0;
-
-        while (buttonstodraw > 0)
+        internal static int CalculateRows(int columns, int elementsamount)
         {
-            buttonstodraw -= columns;
-            rows++;
-        }
+            int buttonstodraw = elementsamount;
 
-        if (rows == 0)
-        {
-            rows = 1;
-        }
+            int rows = 0;
 
-        return rows;
-    }
-
-    internal static GameObject BuildBareMeshCopy(GameObject original)
-    {
-
-        var go = GameObject.Instantiate(original);
-        go.name = original.name;
-
-        go.transform.localScale = original.transform.lossyScale;
-
-        RemoveAllComponentsExceptMeshFilterAndMeshRenderInTransformTree(go.transform);
-
-        return go;
-
-        void RemoveAllComponentsExceptMeshFilterAndMeshRenderInTransformTree(Transform Root)
-        {
-            var components = go.GetComponentsInChildren<Component>();
-
-            foreach (var component in components)
+            while (buttonstodraw > 0)
             {
-                var componenttype = component.GetType();
+                buttonstodraw -= columns;
+                rows++;
+            }
 
-                if (componenttype != typeof(MeshFilter) && componenttype != typeof(MeshRenderer) && componenttype != typeof(Transform))
+            if (rows == 0)
+            {
+                rows = 1;
+            }
+
+            return rows;
+        }
+
+        internal static GameObject BuildBareMeshCopy(GameObject original)
+        {
+
+            var go = GameObject.Instantiate(original);
+            go.name = original.name;
+
+            go.transform.localScale = original.transform.lossyScale;
+
+            RemoveAllComponentsExceptMeshFilterAndMeshRenderInTransformTree(go.transform);
+
+            return go;
+
+            void RemoveAllComponentsExceptMeshFilterAndMeshRenderInTransformTree(Transform Root)
+            {
+                var components = go.GetComponentsInChildren<Component>();
+
+                foreach (var component in components)
                 {
-                    Object.DestroyImmediate(component);
+                    var componenttype = component.GetType();
+
+                    if (componenttype != typeof(MeshFilter) && componenttype != typeof(MeshRenderer) && componenttype != typeof(Transform))
+                    {
+                        Object.DestroyImmediate(component);
+                    }
                 }
             }
         }
     }
-
-
 }

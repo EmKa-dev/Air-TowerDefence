@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-internal interface ISingleTargetBehaviour
+namespace AirTowerDefence.Tower
 {
-    Transform Target { get; }
+    internal interface ISingleTargetBehaviour
+    {
+        Transform Target { get; }
+    }
 }

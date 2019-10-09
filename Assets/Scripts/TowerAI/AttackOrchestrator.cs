@@ -1,54 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class AttackOrchestrator : MonoBehaviour
+namespace AirTowerDefence.Tower
 {
-    [Header("Setup")]
-
-    [SerializeField]
-    public float FireRate;
-
-    private Targetter _TargetBehaviour;
-
-    protected ILauncher _Launcher;
-
-    private float FireTimer;
-
-    private void Awake()
+    public class AttackOrchestrator : MonoBehaviour
     {
-        _TargetBehaviour = GetComponent<Targetter>();
-        _Launcher = GetComponent<ILauncher>();
+        [Header("Setup")]
 
-        if (_TargetBehaviour == null)
-        {
-            Debug.LogError($"Missing component {nameof(Targetter)}");
-        }
-        if (_Launcher == null)
-        {
-            Debug.LogError($"Missing component {nameof(ILauncher)}");
-        }
-    }
+        [SerializeField]
+        public float FireRate;
 
-    private void Update()
-    {
-        FireTimer -= Time.deltaTime;
+        private Targetter _TargetBehaviour;
 
-        if (FireTimer <= 0)
+        protected ILauncher _Launcher;
+
+        private float FireTimer;
+
+        private void Awake()
         {
-            if (_TargetBehaviour is ISingleTargetBehaviour s)
+            _TargetBehaviour = GetComponent<Targetter>();
+            _Launcher = GetComponent<ILauncher>();
+
+            if (_TargetBehaviour == null)
             {
-                _Launcher.Fire(s.Target);
+                Debug.LogError($"Missing component {nameof(Targetter)}");
             }
-            else if (_TargetBehaviour is IMultiTargetBehaviour m)
+            if (_Launcher == null)
             {
-                _Launcher.Fire(m.Targets);
+                Debug.LogError($"Missing component {nameof(ILauncher)}");
             }
+        }
 
-            FireTimer = 1 / FireRate;
+        private void Update()
+        {
+            FireTimer -= Time.deltaTime;
+
+            if (FireTimer <= 0)
+            {
+                if (_TargetBehaviour is ISingleTargetBehaviour s)
+                {
+                    _Launcher.Fire(s.Target);
+                }
+                else if (_TargetBehaviour is IMultiTargetBehaviour m)
+                {
+                    _Launcher.Fire(m.Targets);
+                }
+
+                FireTimer = 1 / FireRate;
+            }
         }
     }
 }

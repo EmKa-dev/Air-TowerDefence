@@ -1,17 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using AirTowerDefence.Tower;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
-namespace Tests
+namespace AirTowerDefence.Tests
 {
     public class SingleTargetTests
     {
-
-
-        // A Test behaves as an ordinary method
         [Test]
         public void NoTargetsInScene_ShouldDetectNoTargets()
         {

@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class Targetter : MonoBehaviour
+namespace AirTowerDefence.Tower
 {
-    [Header("Attributes")]
+    public abstract class Targetter : MonoBehaviour
+    {
+        [Header("Attributes")]
 
-    public float Range;
+        public float Range;
 
-    public float SearchRate;
+        public float SearchRate;
 
-    [Header("Setup")]
+        [Header("Setup")]
 
-    [SerializeField]
-    protected GameObject _TurretMesh;
+        [SerializeField]
+        protected GameObject _TurretMesh;
 
-    protected Collider[] _CandiateBuffer;
+        protected Collider[] _CandiateBuffer;
 
-    protected int _TargetLayerMask;
+        protected int _TargetLayerMask;
 
-    public abstract void Search();
+        public abstract void Search();
+    }
 }
 

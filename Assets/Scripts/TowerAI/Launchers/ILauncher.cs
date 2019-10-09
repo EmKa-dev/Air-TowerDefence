@@ -1,11 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
-public interface ILauncher
+namespace AirTowerDefence.Tower
 {
-    event Action Launch;
+    public interface ILauncher
+    {
+        event Action Launch;
 
-    void Fire(Transform target);
+        void Fire(Transform target);
 
-    void Fire(Transform[] targets);
+        void Fire(Transform[] targets);
+    }
 }

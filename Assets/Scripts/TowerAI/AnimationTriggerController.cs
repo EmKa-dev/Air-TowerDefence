@@ -1,39 +1,42 @@
 ﻿using UnityEngine;
 
-public class AnimationTriggerController : MonoBehaviour
+namespace AirTowerDefence.Tower
 {
-    [SerializeField]
-    private string _TriggerName;
-
-    [SerializeField]
-    private bool SetAnimationRateFromFireRate;
-
-    public Animator _Animator;
-
-    void Start()
+    public class AnimationTriggerController : MonoBehaviour
     {
-        transform.parent.GetComponentInChildren<ILauncher>().Launch += PlayLaunchAnimation;
+        [SerializeField]
+        private string _TriggerName;
 
-        if (SetAnimationRateFromFireRate)
+        [SerializeField]
+        private bool SetAnimationRateFromFireRate;
+
+        public Animator _Animator;
+
+        void Start()
         {
-            var f = GetFireRate();
+            transform.parent.GetComponentInChildren<ILauncher>().Launch += PlayLaunchAnimation;
 
-            if (f < 1.0f)
+            if (SetAnimationRateFromFireRate)
             {
-                f = 1.0f;
+                var f = GetFireRate();
+
+                if (f < 1.0f)
+                {
+                    f = 1.0f;
+                }
+
+                _Animator.SetFloat("FireRate", f);
             }
-
-            _Animator.SetFloat("FireRate", f);
         }
-    }
 
-    private float GetFireRate()
-    {
-        return transform.parent.GetComponentInChildren<AttackOrchestrator>().FireRate;
-    }
+        private float GetFireRate()
+        {
+            return transform.parent.GetComponentInChildren<AttackOrchestrator>().FireRate;
+        }
 
-    private void PlayLaunchAnimation()
-    {
-        _Animator.SetTrigger("OnLaunch");
+        private void PlayLaunchAnimation()
+        {
+            _Animator.SetTrigger("OnLaunch");
+        }
     }
 }

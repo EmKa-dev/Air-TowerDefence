@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
-internal interface IProjectile
+namespace AirTowerDefence.Projectile
 {
-    void Initialize(Transform target, float damage, float speed);
+    internal interface IProjectile
+    {
+        void Initialize(Transform target, float damage, float speed);
+    }
 }
 
