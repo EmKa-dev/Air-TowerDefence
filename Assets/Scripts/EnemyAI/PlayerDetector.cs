@@ -59,9 +59,9 @@ namespace AirTowerDefence.Enemy
             TargetLost?.Invoke(_Player);
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(transform.position, _Range);
-        }
+        //private void OnDrawGizmos()
+        //{
+        //    Gizmos.DrawWireSphere(transform.position, _Range);
+        //}
     }
 }

@@ -7,18 +7,25 @@ namespace AirTowerDefence.Enemy.Controllers
     [RequireComponent(typeof(PlayerDetector))]
     public class RollingCannonAttackControler : AttackController
     {
+
+        private Animator _Animator;
+
         [SerializeField]
         private GameObject _ProjectilePrefab;
 
-        private Animator _Animator;
+        [SerializeField]
+        private Transform _RotationPivotPoint;
+
+        [SerializeField]
+        private float _RotationSpeed;
 
         private float _AttackTimer;
 
         private Transform _Target;
 
+
         private void Start()
         {
-
             _Animator = transform.root.GetComponentInChildren<Animator>();
 
             var d = GetComponent<PlayerDetector>();
@@ -58,16 +65,21 @@ namespace AirTowerDefence.Enemy.Controllers
         private void AdjustAiming()
         {
             //Calculate angle we need to aim
-
+            
+            float angle = Vector3.Angle(transform.position, _Target.position);
+            angle = 90 - angle;
+            _Animator.SetFloat("AimingBlend", Mathf.Clamp(angle, 0, 90));
 
         }
 
         private void RotateTowardsTarget()
         {
+
             Vector3 dir = _Target.position - transform.position;
 
             Quaternion lookrot = Quaternion.LookRotation(dir);
-            transform.rotation = lookrot;
+            Vector3 rotation = Quaternion.Slerp(transform.rotation, lookrot, Time.deltaTime * _RotationSpeed).eulerAngles;
+            transform.rotation = Quaternion.Euler(0, rotation.y, 0);
         }
 
         private void TargetDetected(Transform target)
