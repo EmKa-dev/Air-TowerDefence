@@ -19,10 +19,14 @@ namespace AirTowerDefence.Enemy.Controllers
         [SerializeField]
         private float _RotationSpeed;
 
-        private float _AttackTimer;
+        [SerializeField]
+        private float AfterFireStunTime;
 
         private Transform _Target;
 
+        private float _AttackTimer;
+
+        private float _StunnedAfterFiringTimer;
 
         private void Start()
         {
@@ -37,21 +41,31 @@ namespace AirTowerDefence.Enemy.Controllers
 
         public override void UpdateControl()
         {
+            if (_Target == null)
+            {
+                return;
+            }
+
+            _StunnedAfterFiringTimer -= Time.deltaTime;
+
+            if (_StunnedAfterFiringTimer > 0)
+            {
+                return;
+            }
+
             _AttackTimer -= Time.deltaTime;
 
-            if (_Target != null)
+            RotateTowardsTarget();
+
+            AdjustAiming();
+
+            if (_AttackTimer <= 0)
             {
-                RotateTowardsTarget();
+                Fire();
 
-                AdjustAiming();
-
-                if (_AttackTimer <= 0)
-                {
-                    Fire();
-
-                    _AttackTimer = 1 / _AttackRate;
-                }
+                _AttackTimer = 1 / _AttackRate;
             }
+
         }
 
         private void Fire()
@@ -60,12 +74,13 @@ namespace AirTowerDefence.Enemy.Controllers
             p.GetComponent<IProjectile>().Initialize(_Target, 10, 5);
 
             _Animator.SetTrigger("OnLaunch");
+            _StunnedAfterFiringTimer = AfterFireStunTime;
         }
 
         private void AdjustAiming()
         {
             //Calculate angle we need to aim
-            
+
             float angle = Vector3.Angle(transform.position, _Target.position);
             angle = 90 - angle;
             _Animator.SetFloat("AimingBlend", Mathf.Clamp(angle, 0, 90));
@@ -75,11 +90,11 @@ namespace AirTowerDefence.Enemy.Controllers
         private void RotateTowardsTarget()
         {
 
-            Vector3 dir = _Target.position - transform.position;
+            Vector3 dir = _Target.position - _RotationPivotPoint.position;
 
             Quaternion lookrot = Quaternion.LookRotation(dir);
-            Vector3 rotation = Quaternion.Slerp(transform.rotation, lookrot, Time.deltaTime * _RotationSpeed).eulerAngles;
-            transform.rotation = Quaternion.Euler(0, rotation.y, 0);
+            Vector3 rotation = Quaternion.Slerp(_RotationPivotPoint.rotation, lookrot, Time.deltaTime * _RotationSpeed).eulerAngles;
+            _RotationPivotPoint.rotation = Quaternion.Euler(0, rotation.y, 0);
         }
 
         private void TargetDetected(Transform target)
