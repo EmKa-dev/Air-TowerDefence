@@ -11,10 +11,10 @@ namespace AirTowerDefence.Enemy.Controllers
         private Animator _Animator;
 
         [SerializeField]
-        private GameObject _ProjectilePrefab;
+        private Transform _Muzzle;
 
         [SerializeField]
-        private Transform _RotationPivotPoint;
+        private GameObject _ProjectilePrefab;
 
         [SerializeField]
         private float _RotationSpeed;
@@ -27,6 +27,7 @@ namespace AirTowerDefence.Enemy.Controllers
         private float _AttackTimer;
 
         private float _StunnedAfterFiringTimer;
+
 
         private void Start()
         {
@@ -70,8 +71,7 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private void Fire()
         {
-            var p = Instantiate(_ProjectilePrefab, transform.position, Quaternion.identity);
-            p.GetComponent<IProjectile>().Initialize(_Target, 10, 5);
+            var p = Instantiate(_ProjectilePrefab, _Muzzle.position, _Muzzle.rotation);
 
             _Animator.SetTrigger("OnLaunch");
             _StunnedAfterFiringTimer = AfterFireStunTime;
@@ -79,22 +79,21 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private void AdjustAiming()
         {
-            //Calculate angle we need to aim
+            Vector3 dir = _Target.position - transform.position;
 
-            float angle = Vector3.Angle(transform.position, _Target.position);
-            angle = 90 - angle;
-            _Animator.SetFloat("AimingBlend", Mathf.Clamp(angle, 0, 90));
+            float angle = Vector3.Angle(transform.forward, dir);
+            _Animator.SetFloat("AimingBlend", Mathf.Clamp(angle, 0, 90) );
 
         }
 
         private void RotateTowardsTarget()
         {
 
-            Vector3 dir = _Target.position - _RotationPivotPoint.position;
+            Vector3 dir = _Target.position - transform.position;
 
             Quaternion lookrot = Quaternion.LookRotation(dir);
-            Vector3 rotation = Quaternion.Slerp(_RotationPivotPoint.rotation, lookrot, Time.deltaTime * _RotationSpeed).eulerAngles;
-            _RotationPivotPoint.rotation = Quaternion.Euler(0, rotation.y, 0);
+            Vector3 rotation = Quaternion.Slerp(transform.rotation, lookrot, Time.deltaTime * _RotationSpeed).eulerAngles;
+            transform.rotation = Quaternion.Euler(0, rotation.y, 0);
         }
 
         private void TargetDetected(Transform target)
