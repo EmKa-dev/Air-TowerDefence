@@ -7,9 +7,6 @@ namespace AirTowerDefence.Enemy.Controllers
     [RequireComponent(typeof(PlayerDetector))]
     public class RollingCannonAttackControler : AttackController
     {
-
-        private Animator _Animator;
-
         [SerializeField]
         private Transform _Muzzle;
 
@@ -20,7 +17,12 @@ namespace AirTowerDefence.Enemy.Controllers
         private float _RotationSpeed;
 
         [SerializeField]
+        private float _BarrelAdjustSpeed;
+
+        [SerializeField]
         private float AfterFireStunTime;
+
+        private Animator _Animator;
 
         private Transform _Target;
 
@@ -28,6 +30,9 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private float _StunnedAfterFiringTimer;
 
+        private float _CurrentBarrelAngle;
+
+        private bool _ReadyToFire;
 
         private void Start()
         {
@@ -49,18 +54,16 @@ namespace AirTowerDefence.Enemy.Controllers
 
             _StunnedAfterFiringTimer -= Time.deltaTime;
 
-            if (_StunnedAfterFiringTimer > 0)
+            if (_StunnedAfterFiringTimer > 0f)
             {
                 return;
             }
 
             _AttackTimer -= Time.deltaTime;
 
-            RotateTowardsTarget();
-
             AdjustAiming();
 
-            if (_AttackTimer <= 0)
+            if (_ReadyToFire && _AttackTimer <= 0f)
             {
                 Fire();
 
@@ -80,21 +83,48 @@ namespace AirTowerDefence.Enemy.Controllers
         private void AdjustAiming()
         {
             Vector3 dir = _Target.position - transform.position;
-
-            float angle = Vector3.Angle(transform.forward, dir);
-            _Animator.SetFloat("AimingBlend", Mathf.Clamp(angle, 0, 90) );
-
-        }
-
-        private void RotateTowardsTarget()
-        {
-
-            Vector3 dir = _Target.position - transform.position;
-
             Quaternion lookrot = Quaternion.LookRotation(dir);
-            Vector3 rotation = Quaternion.Slerp(transform.rotation, lookrot, Time.deltaTime * _RotationSpeed).eulerAngles;
-            transform.rotation = Quaternion.Euler(0, rotation.y, 0);
+
+            RotateBody();
+
+            if (IsBodyRotationNearlyComplete())
+            {
+                RotateBarrel();
+            }
+            else
+            {
+                _ReadyToFire = false;
+            }
+
+            void RotateBody()
+            {
+                Vector3 rotation = Quaternion.RotateTowards(transform.rotation, lookrot, _RotationSpeed * Time.deltaTime).eulerAngles;
+                transform.rotation = Quaternion.Euler(0, rotation.y, 0);
+            }
+
+            bool IsBodyRotationNearlyComplete()
+            {
+                return Mathf.Abs(transform.rotation.eulerAngles.y - lookrot.eulerAngles.y) < 10f;
+            }
+
+            void RotateBarrel()
+            {
+
+                float angle = Vector3.Angle(transform.forward, dir);
+                float smoothedangle = Mathf.MoveTowards(_CurrentBarrelAngle, angle, _BarrelAdjustSpeed * Time.deltaTime);
+
+                _CurrentBarrelAngle = Mathf.Clamp(smoothedangle, 0, 90);
+
+                _Animator.SetFloat("AimingBlend", _CurrentBarrelAngle);
+
+                if (Mathf.Abs(angle - smoothedangle) < 1f)
+                {
+                    _ReadyToFire = true;
+                }
+            }
         }
+
+
 
         private void TargetDetected(Transform target)
         {
