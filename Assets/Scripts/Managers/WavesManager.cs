@@ -18,7 +18,10 @@ namespace AirTowerDefence.Managers
             _CreepFactory = new CreepFactory();
             _Spawnpoint = GameObject.FindGameObjectWithTag("Spawnpoint");
 
-            StartNextWave();
+            if (WavesContainer.Waves.Count > 0)
+            {
+                StartNextWave();
+            }
         }
 
         public void StartNextWave()
