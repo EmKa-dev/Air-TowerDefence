@@ -44,7 +44,7 @@ namespace AirTowerDefence.EditorTool
 
             spawnobjectcopy.transform.position = originalspawnobject.transform.position;
 
-            HideAllObjectsExcept(spawnobjectcopy, originalwavesmanager.gameObject);
+            HideAllObjectsExcept(spawnobjectcopy);
             Selection.activeGameObject = spawnobjectcopy;
             SceneView.lastActiveSceneView.FrameSelected();
 
@@ -55,7 +55,7 @@ namespace AirTowerDefence.EditorTool
             });
         }
 
-        private static void HideAllObjectsExcept(params GameObject[] gameobjects)
+        private static void HideAllObjectsExcept(params GameObject[] exceptions)
         {
             GameObject[] allobjects = GameObject.FindObjectsOfType(typeof(GameObject)).Cast<GameObject>().ToArray();
 
@@ -64,9 +64,12 @@ namespace AirTowerDefence.EditorTool
                 go.SetActive(false);
             }
 
-            foreach (var gameobj in gameobjects)
+            foreach (var gameobj in exceptions)
             {
-                gameobj.SetActive(true);
+                foreach (var transform in gameobj.GetComponentsInChildren<Transform>())
+                {
+                    transform.gameObject.SetActive(true);
+                }
             }
 
         }

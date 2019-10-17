@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace AirTowerDefence.EditorTool
@@ -29,18 +29,25 @@ namespace AirTowerDefence.EditorTool
         internal static GameObject BuildBareMeshCopy(GameObject original)
         {
 
-            var rootobject = new GameObject();
+            var listofcopies = GetCopyOfTransformsWithMeshes(original);
 
-            rootobject.name = original.name;
-
-            CopyTransformValues(original.transform ,rootobject.transform);
-
-            foreach (var copygo in GetCopyOfTransformsWithMeshes(original))
+            if (listofcopies.Count == 1)
             {
-                copygo.transform.SetParent(rootobject.transform, true);
+                return listofcopies.First();
             }
 
-            return rootobject;
+            var copycontainer = new GameObject();
+
+            copycontainer.name = original.name;
+
+            CopyTransformValues(original.transform , copycontainer.transform);
+
+            foreach (var copygo in listofcopies)
+            {
+                copygo.transform.SetParent(copycontainer.transform, true);
+            }
+
+            return copycontainer;
         }
 
 
@@ -70,11 +77,11 @@ namespace AirTowerDefence.EditorTool
 
         }
 
-        private static void CopyTransformValues(Transform original, Transform copy)
+        private static void CopyTransformValues(Transform original, Transform destination)
         {
-            copy.position = original.position;
-            copy.rotation = original.rotation;
-            copy.localScale = original.lossyScale;
+            destination.position = original.position;
+            destination.rotation = original.rotation;
+            destination.localScale = original.lossyScale;
         }
 
         private static void CopyMeshFromOrignal(GameObject original, GameObject destination)
