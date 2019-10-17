@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace AirTowerDefence.EditorTool
 {
@@ -27,29 +29,62 @@ namespace AirTowerDefence.EditorTool
         internal static GameObject BuildBareMeshCopy(GameObject original)
         {
 
-            var go = GameObject.Instantiate(original);
-            go.name = original.name;
+            var rootobject = new GameObject();
 
-            go.transform.localScale = original.transform.lossyScale;
+            rootobject.name = original.name;
 
-            RemoveAllComponentsExceptMeshFilterAndMeshRenderInTransformTree(go.transform);
+            CopyTransformValues(original.transform ,rootobject.transform);
 
-            return go;
-
-            void RemoveAllComponentsExceptMeshFilterAndMeshRenderInTransformTree(Transform Root)
+            foreach (var copygo in GetCopyOfTransformsWithMeshes(original))
             {
-                var components = go.GetComponentsInChildren<Component>();
-
-                foreach (var component in components)
-                {
-                    var componenttype = component.GetType();
-
-                    if (componenttype != typeof(MeshFilter) && componenttype != typeof(MeshRenderer) && componenttype != typeof(Transform))
-                    {
-                        Object.DestroyImmediate(component);
-                    }
-                }
+                copygo.transform.SetParent(rootobject.transform, true);
             }
+
+            return rootobject;
+        }
+
+
+        //For every transform
+        private static List<GameObject> GetCopyOfTransformsWithMeshes(GameObject original)
+        {
+            List<GameObject> meshcopies = new List<GameObject>();
+
+            foreach (var transformwithmesh in original.GetComponentsInChildren<MeshFilter>())
+            {
+                meshcopies.Add(CreateCopyFromOrignal(transformwithmesh.gameObject));
+            }
+
+            return meshcopies;
+        }
+
+        private static GameObject CreateCopyFromOrignal(GameObject original)
+        {
+            GameObject copy = new GameObject();
+
+            copy.name = $"{original.name}-copy";
+
+            CopyTransformValues(original.transform, copy.transform);
+            CopyMeshFromOrignal(original, copy);
+
+            return copy;
+
+        }
+
+        private static void CopyTransformValues(Transform original, Transform copy)
+        {
+            copy.position = original.position;
+            copy.rotation = original.rotation;
+            copy.localScale = original.lossyScale;
+        }
+
+        private static void CopyMeshFromOrignal(GameObject original, GameObject destination)
+        {
+
+            var destinationmeshfilter = destination.AddComponent<MeshFilter>();
+            var destinationrenderer = destination.AddComponent<MeshRenderer>();
+
+            destinationmeshfilter.sharedMesh = original.GetComponent<MeshFilter>().sharedMesh;
+            destinationrenderer.sharedMaterial = original.GetComponent<MeshRenderer>().sharedMaterial;
         }
     }
 }
