@@ -19,6 +19,9 @@ namespace AirTowerDefence.Enemy.Controllers
         [SerializeField]
         private float TimeBetweenHops;
 
+        [SerializeField]
+        private float MaxDistanceToTargetBeforeNext;
+
         private SquareWaypoint TargetWayPoint;
 
         private Vector3 _TargetPositionInWorldSpace;
@@ -47,7 +50,7 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private void Awake()
         {
-            _Animator = GetComponent<Animator>();
+            _Animator = GetComponentInChildren<Animator>();
         }
 
         public override void UpdateControl()
@@ -72,14 +75,12 @@ namespace AirTowerDefence.Enemy.Controllers
 
         public void OnMiddleStepReached()
         {
-            Debug.Log("MiddleStep");
+
         }
 
         public void OnAnimationEnd()
         {
             StoreNewPosition();
-
-            Distance = Vector3.Distance(_NewPosition, _TargetPositionInWorldSpace);
 
             if (IsCloseToTargetDestination())
             {
@@ -90,7 +91,7 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private bool IsCloseToTargetDestination()
         {
-            return Vector3.Distance(_NewPosition, _TargetPositionInWorldSpace) < 4f;
+            return Vector3.Distance(_NewPosition, _TargetPositionInWorldSpace) < MaxDistanceToTargetBeforeNext;
         }
 
         private void GetNextTargetPosition()

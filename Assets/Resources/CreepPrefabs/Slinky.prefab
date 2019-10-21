@@ -69,6 +69,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 649846270163187408}
+  - component: {fileID: 512104373756356633}
+  - component: {fileID: 4695093513048128256}
   m_Layer: 0
   m_Name: Slinky
   m_TagString: Untagged
@@ -83,14 +85,43 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 649846270163187411}
-  m_LocalRotation: {x: -0, y: -0.62170184, z: -0, w: 0.7832541}
-  m_LocalPosition: {x: 0, y: 0, z: -15}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5511846789337070874}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -76.881004, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &512104373756356633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649846270163187411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f195804dbb45154d9ac7f3924d19834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4695093513048128256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649846270163187411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b681da1926ed6447b61294194ec6133, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _IsDefaultController: 1
+  _ParentTransform: {fileID: 649846270163187408}
+  _AnimationSteps: {fileID: 5441395409342450733}
+  TimeBetweenHops: 3
+  MaxDistanceToTargetBeforeNext: 1.5
 --- !u!1 &1364484879730086651
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,7 +383,6 @@ GameObject:
   - component: {fileID: 5511846789337070874}
   - component: {fileID: 7055665552378962991}
   - component: {fileID: 2518638856124010592}
-  - component: {fileID: 8801540738346569486}
   m_Layer: 0
   m_Name: SlinkyObject
   m_TagString: Untagged
@@ -452,25 +482,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8801540738346569486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8801540738346569481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b681da1926ed6447b61294194ec6133, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IsDefaultController: 0
-  _ParentTransform: {fileID: 649846270163187408}
-  _AnimationSteps: {fileID: 5441395409342450733}
-  TimeBetweenHops: 3
-  TargetWayPoint: {fileID: 0}
-  _NewRotation: {x: 0, y: 0, z: 0, w: 0}
-  Distance: 0
 --- !u!1 &8828742097465091653
 GameObject:
   m_ObjectHideFlags: 0
