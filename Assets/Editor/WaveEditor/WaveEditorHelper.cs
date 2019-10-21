@@ -28,18 +28,19 @@ namespace AirTowerDefence.EditorTool
 
         internal static GameObject BuildBareMeshCopy(GameObject original)
         {
-
             var listofcopies = GetCopyOfTransformsWithMeshes(original);
 
             if (listofcopies.Count == 1)
             {
-                return listofcopies.First();
+                var res = listofcopies.First();
+
+                res.name = original.name;
+                return res;
             }
 
             var copycontainer = new GameObject();
 
             copycontainer.name = original.name;
-
             CopyTransformValues(original.transform , copycontainer.transform);
 
             foreach (var copygo in listofcopies)
@@ -70,7 +71,7 @@ namespace AirTowerDefence.EditorTool
 
             foreach (var meshfilter in original.GetComponentsInChildren<MeshFilter>())
             {
-                objectswithmesh.Add(CreateCopyFromOrignal(meshfilter.gameObject));
+                objectswithmesh.Add(meshfilter.gameObject);
             }
             foreach (var skinnedmesh in original.GetComponentsInChildren<SkinnedMeshRenderer>())
             {
@@ -84,7 +85,7 @@ namespace AirTowerDefence.EditorTool
         {
             GameObject copy = new GameObject();
 
-            copy.name = $"{original.name}-copy";
+            copy.name = $"{original.name}-Copy";
 
             CopyTransformValues(original.transform, copy.transform);
             CopyMeshFromOrignal(original, copy);
@@ -102,7 +103,6 @@ namespace AirTowerDefence.EditorTool
 
         private static void CopyMeshFromOrignal(GameObject original, GameObject destination)
         {
-
             var destinationmeshfilter = destination.AddComponent<MeshFilter>();
             var destinationrenderer = destination.AddComponent<MeshRenderer>();
 
