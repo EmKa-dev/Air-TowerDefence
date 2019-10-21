@@ -411,7 +411,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WavesContainer:
-    Waves: []
+    Waves:
+    - Spawns:
+      - SpawnData:
+        - CreepIdentifier: SlinkyObject
+          RelativePosition: {x: 0, y: -0.01, z: 0}
+        _TimeToNext: 0
 --- !u!114 &509588746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1601,6 +1606,16 @@ PrefabInstance:
     - target: {fileID: 7055665552378962991, guid: bf9f558bd526b68428683241650b45fa,
         type: 3}
       propertyPath: m_DynamicOccludee
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055665552378962991, guid: bf9f558bd526b68428683241650b45fa,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055665552378962991, guid: bf9f558bd526b68428683241650b45fa,
+        type: 3}
+      propertyPath: m_SkinnedMotionVectors
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8801540738346569486, guid: bf9f558bd526b68428683241650b45fa,

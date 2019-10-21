@@ -55,13 +55,29 @@ namespace AirTowerDefence.EditorTool
         private static List<GameObject> GetCopyOfTransformsWithMeshes(GameObject original)
         {
             List<GameObject> meshcopies = new List<GameObject>();
-
-            foreach (var transformwithmesh in original.GetComponentsInChildren<MeshFilter>())
+       
+            foreach (var transformwithmesh in GameobjectsWithMeshes(original))
             {
                 meshcopies.Add(CreateCopyFromOrignal(transformwithmesh.gameObject));
             }
 
             return meshcopies;
+        }
+
+        private static IEnumerable<GameObject> GameobjectsWithMeshes(GameObject original)
+        {
+            List<GameObject> objectswithmesh = new List<GameObject>();
+
+            foreach (var meshfilter in original.GetComponentsInChildren<MeshFilter>())
+            {
+                objectswithmesh.Add(CreateCopyFromOrignal(meshfilter.gameObject));
+            }
+            foreach (var skinnedmesh in original.GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                objectswithmesh.Add(skinnedmesh.gameObject);
+            }
+
+            return objectswithmesh;
         }
 
         private static GameObject CreateCopyFromOrignal(GameObject original)
@@ -90,8 +106,48 @@ namespace AirTowerDefence.EditorTool
             var destinationmeshfilter = destination.AddComponent<MeshFilter>();
             var destinationrenderer = destination.AddComponent<MeshRenderer>();
 
-            destinationmeshfilter.sharedMesh = original.GetComponent<MeshFilter>().sharedMesh;
-            destinationrenderer.sharedMaterial = original.GetComponent<MeshRenderer>().sharedMaterial;
+            destinationmeshfilter.sharedMesh = ExtractMesh();
+            destinationrenderer.sharedMaterial = ExtractMaterial();
+
+            Mesh ExtractMesh()
+            {
+                var mf = original.GetComponent<MeshFilter>();
+
+                if (mf != null)
+                {
+                    return mf.sharedMesh;
+                }
+
+                var smr = original.GetComponent<SkinnedMeshRenderer>();
+
+                if (smr != null)
+                {
+                    return smr.sharedMesh;
+                }
+
+                return null;
+            }
+
+            Material ExtractMaterial()
+            {
+                var mf = original.GetComponent<MeshRenderer>();
+
+                if (mf != null)
+                {
+                    return mf.sharedMaterial;
+                }
+
+                var smr = original.GetComponent<SkinnedMeshRenderer>();
+
+                if (smr != null)
+                {
+                    return smr.sharedMaterial;
+                }
+
+                return null;
+            }
         }
+
+
     }
 }
