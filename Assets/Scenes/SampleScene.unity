@@ -414,10 +414,14 @@ MonoBehaviour:
     Waves:
     - Spawns:
       - SpawnData:
-        - CreepIdentifier: RollingCannon
-          RelativePosition: {x: 0, y: 0.31100002, z: 0}
         - CreepIdentifier: Slinky
-          RelativePosition: {x: 0, y: -0.01, z: -1.02}
+          RelativePosition: {x: 0, y: -0.01, z: 0.78}
+        - CreepIdentifier: Slinky
+          RelativePosition: {x: 0, y: -0.01, z: -0.89}
+        - CreepIdentifier: Slinky
+          RelativePosition: {x: 1.01, y: -0.01, z: 0}
+        - CreepIdentifier: Slinky
+          RelativePosition: {x: -1.25, y: -0.01, z: 0}
         _TimeToNext: 0
 --- !u!114 &509588746
 MonoBehaviour:

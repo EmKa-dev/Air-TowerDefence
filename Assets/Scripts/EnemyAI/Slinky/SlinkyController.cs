@@ -17,7 +17,7 @@ namespace AirTowerDefence.Enemy.Controllers
         private Transform _AnimationSteps;
 
         [SerializeField]
-        private float TimeBetweenHops;
+        private float _TimeBetweenHops;
 
         [SerializeField]
         private float MaxDistanceToTargetBeforeNext;
@@ -30,14 +30,15 @@ namespace AirTowerDefence.Enemy.Controllers
         private Vector3 _NewPosition;
         private Quaternion _NewRotation;
 
-        private float HopTimer;
+        private float _HopTimer;
+        private bool _IsHopping;
 
         void Start()
         {
             FindSpawnPoint();
 
             _NewPosition = _ParentTransform.position;
-            HopTimer = TimeBetweenHops;
+            _HopTimer = _TimeBetweenHops;
 
             _TargetPositionInWorldSpace = transform.position;
             _RelativePositionToWayPoint = TargetWayPoint.transform.InverseTransformPoint(transform.position);
@@ -55,13 +56,16 @@ namespace AirTowerDefence.Enemy.Controllers
 
         public override void UpdateControl()
         {
-
-            HopTimer -= Time.deltaTime;
-
-            if (HopTimer <= 0f)
+            if (!_IsHopping)
             {
+                _HopTimer -= Time.deltaTime;
+            }
+
+            if (_HopTimer <= 0f)
+            {
+                _IsHopping = true;
                 HopForward();
-                HopTimer = TimeBetweenHops;
+                _HopTimer = _TimeBetweenHops;
             }
         }
 
@@ -87,6 +91,8 @@ namespace AirTowerDefence.Enemy.Controllers
                 GetNextTargetPosition();
                 StoreNewRotation();
             }
+
+            _IsHopping = false;
         }
 
         private bool IsCloseToTargetDestination()
