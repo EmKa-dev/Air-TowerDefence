@@ -543,12 +543,20 @@ namespace AirTowerDefence.EditorTool
                 {
                     UpdateSectionArea();
 
+                    //Remove any objects that have been destroyed
+                    if (_PreviewObjects.Any(x => x == null))
+                    {
+                        _PreviewObjects.RemoveAll(x => x == null);
+                    }
+
                     if (!_PreviewRendered)
                     {
                         SetupSpawnPreview();
                     }
 
-                    if (_PreviewObjects.Any(x => x.transform.hasChanged == true))
+
+
+                    if (_PreviewObjects.Any(x => x != null && x.transform.hasChanged == true))
                     {
                         SaveCurrentSpawnData();
                     }
