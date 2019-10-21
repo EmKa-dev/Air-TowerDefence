@@ -19,20 +19,15 @@ namespace AirTowerDefence.Enemy.Controllers
         [SerializeField]
         private float TimeBetweenHops;
 
-        [SerializeField]
         private SquareWaypoint TargetWayPoint;
 
         private Vector3 _TargetPositionInWorldSpace;
         private Vector3 _RelativePositionToWayPoint;
 
         private Vector3 _NewPosition;
-        [SerializeField]
         private Quaternion _NewRotation;
 
         private float HopTimer;
-
-        [SerializeField]
-        private float Distance;
 
         void Start()
         {
