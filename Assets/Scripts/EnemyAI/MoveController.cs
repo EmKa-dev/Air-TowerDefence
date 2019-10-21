@@ -10,24 +10,26 @@ namespace AirTowerDefence.Enemy.Controllers
         [SerializeField]
         private float _Speed;
 
+        [SerializeField]
+        private float _RotationSpeed;
+
         private SquareWaypoint TargetWayPoint;
+        private Vector3 _TargetPositionInWorldSpace;
+        private Vector3 _RelativePositionToWayPoint;
 
-        private Vector3 TargetPositionInWorldSpace;
+        private bool IsRotatedTowardTarget;
 
-        private Vector3 RelativePositionToWayPoint;
 
         void Start()
         {
             FindSpawnPoint();
-            TargetPositionInWorldSpace = transform.position;
-            RelativePositionToWayPoint = TargetWayPoint.transform.InverseTransformPoint(transform.position);
-
-            InvokeRequestControl();
+            _TargetPositionInWorldSpace = transform.position;
+            _RelativePositionToWayPoint = TargetWayPoint.transform.InverseTransformPoint(transform.position);
         }
 
         public override void UpdateControl()
         {
-            MoveTowardTargetWayPoint();
+            MoveTowardTargetPosition();
         }
 
         private void FindSpawnPoint()
@@ -35,25 +37,46 @@ namespace AirTowerDefence.Enemy.Controllers
             TargetWayPoint = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<SquareWaypoint>();
         }
 
-        private void MoveTowardTargetWayPoint()
+        private void MoveTowardTargetPosition()
         {
-            if (Vector3.Distance(transform.position, TargetPositionInWorldSpace) < 0.001f)
+            if (Vector3.Distance(transform.position, _TargetPositionInWorldSpace) < 0.01f)
             {
                 GetNextTargetPosition();
-                RotateTowardsTarget();
+                IsRotatedTowardTarget = false;
             }
 
-            Vector3 targetvector = Vector3.MoveTowards(transform.position, TargetPositionInWorldSpace, _Speed * Time.deltaTime);
 
-            transform.position = targetvector;
+            if (IsRotatedTowardTarget)
+            {
+                Vector3 targetvector = Vector3.MoveTowards(transform.position, _TargetPositionInWorldSpace, _Speed * Time.deltaTime);
+
+                transform.position = targetvector;
+            }
+            else
+            {
+                RotateTowardsTarget();
+            }
         }
 
         private void RotateTowardsTarget()
         {
-            Vector3 dir = TargetWayPoint.transform.position - transform.position;
-
+            Vector3 dir = _TargetPositionInWorldSpace - transform.position;
             Quaternion lookrot = Quaternion.LookRotation(dir);
-            transform.rotation = lookrot;
+
+            RotateBody();
+
+            IsRotatedTowardTarget = IsBodyRotationComplete();
+
+            void RotateBody()
+            {
+                Vector3 rotation = Quaternion.RotateTowards(transform.rotation, lookrot, _RotationSpeed * Time.deltaTime).eulerAngles;
+                transform.rotation = Quaternion.Euler(0, rotation.y, 0);
+            }
+
+            bool IsBodyRotationComplete()
+            {
+                return Mathf.Abs(transform.rotation.eulerAngles.y - lookrot.eulerAngles.y) < 0.01f;
+            }
         }
 
         private void GetNextTargetPosition()
@@ -63,7 +86,7 @@ namespace AirTowerDefence.Enemy.Controllers
                 TargetWayPoint = TargetWayPoint.Next;
             }
 
-            TargetPositionInWorldSpace = TargetWayPoint.transform.TransformPoint(RelativePositionToWayPoint);
+            _TargetPositionInWorldSpace = TargetWayPoint.transform.TransformPoint(_RelativePositionToWayPoint);
         }
     }
 }

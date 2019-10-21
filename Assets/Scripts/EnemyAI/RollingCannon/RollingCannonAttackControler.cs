@@ -128,14 +128,14 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private void TargetDetected(Transform target)
         {
-            InvokeRequestControl();
-
             _Target = target;
+            InvokeRequestControl();
         }
 
         private void TargetLost(Transform target)
         {
             _Target = null;
+            InvokeReliquishControl();
         }
     }
 }
