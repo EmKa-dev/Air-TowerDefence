@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace AirTowerDefence.EditorTool
 {
-    [CustomEditor(typeof(SquareWaypointManager))]
+    [CustomEditor(typeof(WaypointManager))]
     public class SquareWaypointsManagerEditor : Editor
     {
-        SquareWaypointManager manager;
+        WaypointManager manager;
 
         private void OnEnable()
         {
-            manager = (SquareWaypointManager)target;
+            manager = (WaypointManager)target;
         }
 
         public override void OnInspectorGUI()

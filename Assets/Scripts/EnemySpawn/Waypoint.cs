@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace AirTowerDefence.EnemySpawn
 {
-    public class SquareWaypoint : MonoBehaviour
+    public class Waypoint : MonoBehaviour
     {
         public Bounds Area { get; set; }
 
         [SerializeField]
-        public SquareWaypoint Next;
+        public Waypoint Next;
 
         void Start()
         {

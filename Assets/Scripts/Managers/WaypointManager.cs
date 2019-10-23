@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace AirTowerDefence.Managers
 {
-    public class SquareWaypointManager : MonoBehaviour
+    public class WaypointManager : MonoBehaviour
     {
         [SerializeField]
         private GameObject _WayPointPrefab;
         [SerializeField]
         private GameObject _StartPointPrefab;
 
-        public List<SquareWaypoint> Waypoints;
+        public List<Waypoint> Waypoints;
 
         public void CreateNewWaypoint()
         {
@@ -31,12 +31,12 @@ namespace AirTowerDefence.Managers
             }
 
 
-            AddNewWaypointAndCreateLink(obj.GetComponent<SquareWaypoint>());
+            AddNewWaypointAndCreateLink(obj.GetComponent<Waypoint>());
 
             obj.name = $"Waypoint {Waypoints.Count}";
         }
 
-        private void AddNewWaypointAndCreateLink(SquareWaypoint latestwaypoint)
+        private void AddNewWaypointAndCreateLink(Waypoint latestwaypoint)
         {
             //Set link
             if (Waypoints.Count > 0)
@@ -55,7 +55,7 @@ namespace AirTowerDefence.Managers
             }
         }
 
-        private void DrawPathsRecursively(SquareWaypoint rootpoint)
+        private void DrawPathsRecursively(Waypoint rootpoint)
         {
             if (rootpoint == null || rootpoint.Next == null)
             {

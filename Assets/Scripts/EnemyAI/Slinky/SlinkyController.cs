@@ -25,7 +25,7 @@ namespace AirTowerDefence.Enemy.Controllers
         [SerializeField]
         private float MaxDistanceToTargetBeforeNext;
 
-        private SquareWaypoint TargetWayPoint;
+        private Waypoint TargetWayPoint;
 
         private Vector3 _TargetPositionInWorldSpace;
         private Vector3 _RelativePositionToWayPoint;
@@ -49,7 +49,7 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private void FindSpawnPoint()
         {
-            TargetWayPoint = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<SquareWaypoint>();
+            TargetWayPoint = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<Waypoint>();
         }
 
         private void Awake()
