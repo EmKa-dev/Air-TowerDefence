@@ -111,7 +111,6 @@ GameObject:
   - component: {fileID: 1034627829229401608}
   - component: {fileID: 2580419217029443389}
   - component: {fileID: 6976567608462482290}
-  - component: {fileID: 1511216645832922641}
   - component: {fileID: 3196033579005671222}
   m_Layer: 0
   m_Name: SlinkySkin
@@ -212,18 +211,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1511216645832922641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4035477464529847323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f195804dbb45154d9ac7f3924d19834, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3196033579005671222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,10 +223,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b681da1926ed6447b61294194ec6133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _IsDefaultController: 1
   _ParentTransform: {fileID: 2590103445721154880}
   _AnimationSteps: {fileID: 695251710694639423}
-  _TimeBetweenHops: 1
+  _TimeBetweenHops: 0.1
+  _HopSpeed: 2.5
   MaxDistanceToTargetBeforeNext: 1
 --- !u!1 &4080333683898330455
 GameObject:

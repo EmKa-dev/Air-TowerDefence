@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AirTowerDefence.Enemy.Controllers
 {
-    public class SlinkyController : Controller
+    public class SlinkyController : MonoBehaviour
     {
         private Animator _Animator;
 
@@ -18,6 +18,9 @@ namespace AirTowerDefence.Enemy.Controllers
 
         [SerializeField]
         private float _TimeBetweenHops;
+
+        [SerializeField]
+        private float _HopSpeed;
 
         [SerializeField]
         private float MaxDistanceToTargetBeforeNext;
@@ -52,9 +55,10 @@ namespace AirTowerDefence.Enemy.Controllers
         private void Awake()
         {
             _Animator = GetComponentInChildren<Animator>();
+            _Animator.SetFloat("HopSpeed", _HopSpeed);
         }
 
-        public override void UpdateControl()
+        void Update()
         {
             if (!_IsHopping)
             {
@@ -71,7 +75,6 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private void HopForward()
         {
-            //Play again from new position
             _ParentTransform.position = _NewPosition;
             _ParentTransform.rotation = _NewRotation;
             _Animator.Play("Slinky_HopForward", 0, 0f);
