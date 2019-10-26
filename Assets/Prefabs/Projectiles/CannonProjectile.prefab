@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2806760382925058175}
   - component: {fileID: 3852925846631257847}
   - component: {fileID: 7549333719072651947}
+  - component: {fileID: 1607025360939238930}
   m_Layer: 0
   m_Name: CannonProjectile
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: faea9146b41645e49b20143d29f1d94b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,3 +93,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitEffect: {fileID: 0}
   _Speed: 2
+--- !u!114 &1607025360939238930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7448342261232778757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9802386de6919ac41848e751a9d15857, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ColorA: {r: 0, g: 1, b: 0.92573977, a: 0}
+  ColorB: {r: 1, g: 0, b: 0, a: 0}
+  MaxLerpDistance: 10

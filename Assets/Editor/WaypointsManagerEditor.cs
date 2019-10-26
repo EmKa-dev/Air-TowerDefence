@@ -6,7 +6,7 @@ using UnityEngine;
 namespace AirTowerDefence.EditorTool
 {
     [CustomEditor(typeof(WaypointManager))]
-    public class SquareWaypointsManagerEditor : Editor
+    public class WaypointsManagerEditor : Editor
     {
         WaypointManager manager;
 

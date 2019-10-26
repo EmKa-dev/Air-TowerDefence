@@ -323,14 +323,10 @@ MonoBehaviour:
     Waves:
     - Spawns:
       - SpawnData:
-        - CreepIdentifier: Slinky
-          RelativePosition: {x: 0, y: -0.01, z: 0.78}
-        - CreepIdentifier: Slinky
-          RelativePosition: {x: 0, y: -0.01, z: -0.89}
-        - CreepIdentifier: Slinky
-          RelativePosition: {x: 1.01, y: -0.01, z: 0}
-        - CreepIdentifier: Slinky
-          RelativePosition: {x: -1.25, y: -0.01, z: 0}
+        - CreepIdentifier: RollingCannon
+          RelativePosition: {x: 0, y: 0.31100002, z: -1.08}
+        - CreepIdentifier: RollingCannon
+          RelativePosition: {x: 0, y: 0.31100002, z: 0.67}
         _TimeToNext: 0
 --- !u!114 &509588746
 MonoBehaviour:
@@ -350,15 +346,9 @@ MonoBehaviour:
     type: 3}
   Waypoints:
   - {fileID: 325839899}
-  - {fileID: 0}
   - {fileID: 1456277911}
   - {fileID: 1734305743}
   - {fileID: 582647394}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &509588748
 Transform:
   m_ObjectHideFlags: 0
@@ -803,8 +793,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
   m_LocalRotation: {x: 0.5735764, y: -0, z: -0, w: 0.8191521}
-  m_LocalPosition: {x: 0, y: 4.21, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5873334, z: 0.99013776}
+  m_LocalPosition: {x: 0, y: 1.61, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5873334, z: 0}
   m_Children: []
   m_Father: {fileID: 5743074998174477086}
   m_RootOrder: 0
@@ -996,7 +986,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9032648451154944025}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -3.99, y: 4, z: 0}
+  m_LocalPosition: {x: -3.99, y: 9.23, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children:
   - {fileID: 1687258585}
