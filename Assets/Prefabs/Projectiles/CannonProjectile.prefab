@@ -107,4 +107,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ColorA: {r: 0, g: 1, b: 0.92573977, a: 0}
   ColorB: {r: 1, g: 0, b: 0, a: 0}
-  MaxLerpDistance: 10
+  StartLerpDistance: 20
+  MinLerpDistance: 0.5
