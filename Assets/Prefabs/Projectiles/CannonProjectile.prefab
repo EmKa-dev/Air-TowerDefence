@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7448342261232778757}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.011, y: 0.663, z: -0.16}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4475052, y: 0.4475052, z: 0.4475052}
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,5 +107,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ColorA: {r: 0, g: 1, b: 0.92573977, a: 0}
   ColorB: {r: 1, g: 0, b: 0, a: 0}
-  StartLerpDistance: 20
+  ColorPropertyReferenceID: Color_D830E664
+  StartLerpDistance: 10
   MinLerpDistance: 0.5

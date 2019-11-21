@@ -15,6 +15,9 @@ namespace AirTowerDefence.Projectile
         private Color ColorB;
 
         [SerializeField]
+        private string ColorPropertyReferenceID;
+
+        [SerializeField]
         private float StartLerpDistance;
 
         [SerializeField]
@@ -26,7 +29,7 @@ namespace AirTowerDefence.Projectile
         private void Start()
         {
             _Renderer = GetComponent<Renderer>();
-            _Renderer.material.SetColor("_BaseColor", ColorA);
+            _Renderer.material.SetColor(ColorPropertyReferenceID, ColorA);
             Target = GameManager.Instance.Player;
         }
 
@@ -40,7 +43,7 @@ namespace AirTowerDefence.Projectile
             }
 
 
-            _Renderer.material.SetColor("_BaseColor", CalculateNewColor(currentDistance));
+            _Renderer.material.SetColor(ColorPropertyReferenceID, CalculateNewColor(currentDistance));
         }
 
         private Color CalculateNewColor(float currentDistance)
