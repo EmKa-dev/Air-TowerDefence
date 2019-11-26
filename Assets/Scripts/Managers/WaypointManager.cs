@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
+//TODO
+
+// If multiple endpoints, convert previous endpoints back to normal waypoints
+
 namespace AirTowerDefence.Managers
 {
     public class WaypointManager : MonoBehaviour
@@ -11,47 +16,82 @@ namespace AirTowerDefence.Managers
         private GameObject _WayPointPrefab;
         [SerializeField]
         private GameObject _StartPointPrefab;
+        [SerializeField]
+        private GameObject _EndPointPrefab;
 
         public List<Waypoint> Waypoints;
+
+
+        #region Editor
 
         public void CreateNewWaypoint()
         {
             GameObject obj;
 
-            //If its the first, set different color
+            //If its the first, set different prefab
             if (Waypoints.Count < 1)
             {
                 obj = Instantiate(_StartPointPrefab, _WayPointPrefab.transform.position, _WayPointPrefab.transform.rotation);
-                obj.transform.SetParent(transform, true);
             }
             else
             {
                 obj = Instantiate(_WayPointPrefab, Waypoints.First().transform.position, _WayPointPrefab.transform.rotation);
-                obj.transform.SetParent(transform, true);
             }
 
-
-            AddNewWaypointAndCreateLink(obj.GetComponent<Waypoint>());
-
-            obj.name = $"Waypoint {Waypoints.Count}";
+            AddWaypoint(obj.GetComponent<Waypoint>());
         }
 
-        private void AddNewWaypointAndCreateLink(Waypoint latestwaypoint)
+        private void AddWaypoint(Waypoint newwaypoint)
         {
-            //Set link
-            if (Waypoints.Count > 0)
+            newwaypoint.transform.SetParent(transform, true);
+
+            Waypoints.Add(newwaypoint);
+
+            RenameWayPointsInOrder();
+            CreateLinksBetweenAllWaypoints();
+        }
+
+        public void ConvertLastToEndpoint()
+        {
+            var lastwaypoint = Waypoints.Last();
+
+            var endpoint = Instantiate(_EndPointPrefab, lastwaypoint.transform.position, lastwaypoint.transform.rotation);
+
+            Waypoints.Remove(lastwaypoint);
+            DestroyImmediate(lastwaypoint.gameObject);
+
+            AddWaypoint(endpoint.GetComponent<Waypoint>());
+        }
+
+        public void CheckAndRemoveDeletedWaypoints()
+        {
+            if (Waypoints.Any(x => x == null))
             {
-                Waypoints.Last().Next = latestwaypoint;
+                Waypoints.RemoveAll((x) => x == null);
+
+                RenameWayPointsInOrder();
+                CreateLinksBetweenAllWaypoints();
+            }
+        }
+
+        private void RenameWayPointsInOrder()
+        {
+            for (int i = 0; i < Waypoints.Count; i++)
+            {
+                Waypoints[i].name = $"Waypoint {i.ToString()}";
+            }
+        }
+
+        private void CreateLinksBetweenAllWaypoints()
+        {
+            if (Waypoints.Count < 1)
+            {
+                return;
             }
 
-            Waypoints.Add(latestwaypoint);
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (Waypoints != null && Waypoints.Count > 1)
+            for (int i = 0; i < Waypoints.Count; i++)
             {
-                DrawPathsRecursively(Waypoints.First());
+                Waypoints[i].Next = i == Waypoints.Count - 1 ? null : Waypoints[i + 1];
             }
         }
 
@@ -67,5 +107,24 @@ namespace AirTowerDefence.Managers
 
             DrawPathsRecursively(rootpoint.Next);
         }
+
+        private void OnDrawGizmos()
+        {
+            if (Waypoints != null && Waypoints.Count > 1)
+            {
+                DrawPathsRecursively(Waypoints.First());
+            }
+        }
+
+        #endregion
+
+        #region PlayMode
+
+        public Waypoint GetSpawnPoint()
+        {
+            return Waypoints.Single(x => x.CompareTag("Spawnpoint"));
+        }
+
+        #endregion
     }
 }

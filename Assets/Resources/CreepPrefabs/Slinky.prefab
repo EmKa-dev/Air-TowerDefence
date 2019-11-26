@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 2590103445721154880}
   m_Layer: 0
   m_Name: Slinky
-  m_TagString: Untagged
+  m_TagString: Creep
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

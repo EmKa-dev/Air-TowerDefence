@@ -5,9 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - WaypointManager
-  - TCreep
   - Spawnpoint
   - WavesManager
+  - Endpoint
+  - Creep
   layers:
   - Default
   - TransparentFX

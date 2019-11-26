@@ -8,7 +8,7 @@ namespace AirTowerDefence.EditorTool
     [CustomEditor(typeof(WaypointManager))]
     public class WaypointsManagerEditor : Editor
     {
-        WaypointManager manager;
+        private WaypointManager manager;
 
         private void OnEnable()
         {
@@ -26,19 +26,16 @@ namespace AirTowerDefence.EditorTool
                 manager.CreateNewWaypoint();
                 Selection.activeGameObject = manager.Waypoints.Last().gameObject;
             }
+
+            if (GUILayout.Button("Convert last to endpoint"))
+            {
+                manager.ConvertLastToEndpoint();
+            }
         }
 
         private void OnSceneGUI()
         {
-            if (manager.Waypoints.Any(x => x == null))
-            {
-                RemoveDeletedWaypoints();
-            }
-        }
-
-        private void RemoveDeletedWaypoints()
-        {
-            manager.Waypoints.RemoveAll((x) => x == null);
+            manager.CheckAndRemoveDeletedWaypoints();
         }
     }
 }
