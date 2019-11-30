@@ -41,6 +41,8 @@ namespace AirTowerDefence.Enemy.Controllers
             _Animator.SetFloat("HopSpeed", _HopSpeed);
 
             _RootObjectTransform = transform.root;
+
+            _HopTimer = Mathf.Infinity;
         }
 
         public void Initialize(Waypoint spawnpoint)
@@ -49,6 +51,9 @@ namespace AirTowerDefence.Enemy.Controllers
             _TargetPositionInWorldSpace = transform.position;
             _RelativePositionToWayPoint = TargetWayPoint.transform.InverseTransformPoint(transform.position);
             _NewPosition = _RootObjectTransform.position;
+
+            GetNextTargetPosition();
+            StoreNewRotation();
 
             _HopTimer = _TimeBetweenHops;
         }
