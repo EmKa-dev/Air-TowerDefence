@@ -16,7 +16,7 @@ namespace AirTowerDefence.Managers
         private void Start()
         {
             _CreepFactory = new CreepFactory();
-            _Spawnpoint = GameObject.FindGameObjectWithTag("Spawnpoint");
+            _Spawnpoint = GetComponent<WaypointManager>().GetSpawnPoint().gameObject;
 
             if (WavesContainer.Waves.Count > 0)
             {

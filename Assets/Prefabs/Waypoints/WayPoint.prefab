@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6620817865649212342}
   - component: {fileID: 3756236614141186677}
   m_Layer: 0
-  m_Name: SquareWayPoint
+  m_Name: WayPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using UnityEngine;
 
+//TODO:
+//Make this class shared or static/singelton (no point in multiple instances of this)
 namespace AirTowerDefence.Managers
 {
     public class CreepFactory

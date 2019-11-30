@@ -11,44 +11,36 @@ namespace AirTowerDefence.EditorTool
 {
     public class WaveEditor
     {
-        public const string SpawnObjectTag = "Spawnpoint";
-
-        [MenuItem("Editor/Wave editor")]
-        public static void BeginWaveEditing()
+        public static void BeginWaveEditing(GameObject spawnpoint, WavesManager wavesmanager)
         {
-            //Save current scene
             EditorSceneManager.SaveOpenScenes();
 
-            GameObject originalspawnobject = GameObject.FindGameObjectWithTag(SpawnObjectTag);
-
-            if (originalspawnobject == null)
+            if (spawnpoint == null)
             {
-                Debug.Log("Couldn't find any object tagged 'Spawnpoint'");
+                Debug.Log("Need a spawnpoint to edit");
                 return;
             }
 
-            WavesManager originalwavesmanager = GetWavesManager();
-
-            if (originalwavesmanager == null)
+            if (wavesmanager == null)
             {
-                Debug.Log($"Must have one component <{nameof(WavesManager)}> attached to active gameobject");
+                Debug.Log($"Must have one component <{nameof(WavesManager)}> attached");
                 return;
             }
 
             //Pre-setup for wave editor scene.
-            GameObject spawnobjectcopy = WaveEditorHelper.BuildBareMeshCopy(originalspawnobject);
+            GameObject spawnobjectcopy = WaveEditorHelper.BuildBareMeshCopy(spawnpoint);
             spawnobjectcopy.name = "Spawn-Preview";
-            spawnobjectcopy.tag = SpawnObjectTag;
 
             spawnobjectcopy.AddComponent<ImmutableGameObject>();
 
-            spawnobjectcopy.transform.position = originalspawnobject.transform.position;
+            spawnobjectcopy.transform.position = spawnpoint.transform.position;
+            spawnobjectcopy.transform.rotation = spawnpoint.transform.rotation;
 
             HideAllObjectsExcept(spawnobjectcopy);
             Selection.activeGameObject = spawnobjectcopy;
             SceneView.lastActiveSceneView.FrameSelected();
 
-            var editorgui = new WaveEditorSceneContext(originalwavesmanager.WavesContainer, () =>
+            var editorgui = new WaveEditorSceneContext(spawnobjectcopy, wavesmanager.WavesContainer, () =>
             {
                 RestoreOriginalScene();
                 GameObject.DestroyImmediate(spawnobjectcopy);
@@ -84,11 +76,6 @@ namespace AirTowerDefence.EditorTool
             }
         }
 
-        private static WavesManager GetWavesManager()
-        {
-            return GameObject.FindObjectOfType<WavesManager>();
-        }
-
         public sealed class WaveEditorSceneContext
         {
             private Action ExitEditingAction;
@@ -102,11 +89,13 @@ namespace AirTowerDefence.EditorTool
             const float BottomBarHeight = 35f;
             const float OffsetFromScreenBorder = 10f;
 
+            private GameObject _Spawnpoint;
             private Wave _SelectedWave;
             private Spawn _SelectedSpawn;
 
-            public WaveEditorSceneContext(WavesContainer wavescontainer, Action exiteditingaction)
+            public WaveEditorSceneContext(GameObject spawnpoint, WavesContainer wavescontainer, Action exiteditingaction)
             {
+                _Spawnpoint = spawnpoint;
                 ExitEditingAction = exiteditingaction;
                 _WavesContainer = wavescontainer;
 
@@ -522,16 +511,16 @@ namespace AirTowerDefence.EditorTool
 
                 public SpawnEditingScene(WaveEditorSceneContext context)
                 {
-                    _CreepPrefabs = Resources.LoadAll("CreepPrefabs").Cast<GameObject>().ToArray();
-
                     _Context = context;
+
+                    _CreepPrefabs = Resources.LoadAll("CreepPrefabs").Cast<GameObject>().ToArray();
 
                     ReturnButtonStyle = _Context._EditorGUISkin.GetStyle("ReturnButton");
                     CreepButtonStyle = _Context._EditorGUISkin.GetStyle("CreepButton");
                     SaveButtonStyle = _Context._EditorGUISkin.GetStyle("SaveButton");
                     DeleteButtonStyle = _Context._EditorGUISkin.GetStyle("DeleteButton");
 
-                    SpawnPosition = GameObject.FindGameObjectWithTag(WaveEditor.SpawnObjectTag).transform.position;
+                    SpawnPosition = _Context._Spawnpoint.transform.position;
                 }
 
                 private Texture GetCreepIcon(string name)
@@ -699,7 +688,7 @@ namespace AirTowerDefence.EditorTool
                             continue;
                         }
 
-                        var spawntransform = GameObject.FindGameObjectWithTag(WaveEditor.SpawnObjectTag).transform;
+                        var spawntransform = _Context._Spawnpoint.transform;
 
                         var relativecreeppos = spawntransform.InverseTransformPoint(creep.transform.position);
 
@@ -728,7 +717,7 @@ namespace AirTowerDefence.EditorTool
                             var preview = WaveEditorHelper.BuildBareMeshCopy(_CreepPrefabs.Single(x => x.name == datapoint.CreepIdentifier));
                             preview.name = AddPreviewSuffix(preview.name);
 
-                            var spawntransform = GameObject.FindGameObjectWithTag(WaveEditor.SpawnObjectTag).transform;
+                            var spawntransform = _Context._Spawnpoint.transform;
 
                             var relativecreeppos = spawntransform.TransformPoint(datapoint.RelativePosition);
 

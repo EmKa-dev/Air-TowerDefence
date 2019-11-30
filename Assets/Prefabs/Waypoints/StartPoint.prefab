@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5850530169947600496}
   - component: {fileID: 5505641225551843353}
   m_Layer: 0
-  m_Name: SquareStartPoint
+  m_Name: StartPoint
   m_TagString: Spawnpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

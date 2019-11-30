@@ -21,7 +21,6 @@ namespace AirTowerDefence.Managers
 
         public List<Waypoint> Waypoints;
 
-
         #region Editor
 
         public void CreateNewWaypoint()
@@ -41,18 +40,14 @@ namespace AirTowerDefence.Managers
             AddWaypoint(obj.GetComponent<Waypoint>());
         }
 
-        private void AddWaypoint(Waypoint newwaypoint)
-        {
-            newwaypoint.transform.SetParent(transform, true);
-
-            Waypoints.Add(newwaypoint);
-
-            RenameWayPointsInOrder();
-            CreateLinksBetweenAllWaypoints();
-        }
-
         public void ConvertLastToEndpoint()
         {
+            if (Waypoints.Count < 2)
+            {
+                Debug.Log("Can not convert spawnpoint to endpoint");
+                return;
+            }
+
             var lastwaypoint = Waypoints.Last();
 
             var endpoint = Instantiate(_EndPointPrefab, lastwaypoint.transform.position, lastwaypoint.transform.rotation);
@@ -72,6 +67,16 @@ namespace AirTowerDefence.Managers
                 RenameWayPointsInOrder();
                 CreateLinksBetweenAllWaypoints();
             }
+        }
+
+        private void AddWaypoint(Waypoint newwaypoint)
+        {
+            newwaypoint.transform.SetParent(transform, true);
+
+            Waypoints.Add(newwaypoint);
+
+            RenameWayPointsInOrder();
+            CreateLinksBetweenAllWaypoints();
         }
 
         private void RenameWayPointsInOrder()
@@ -122,7 +127,7 @@ namespace AirTowerDefence.Managers
 
         public Waypoint GetSpawnPoint()
         {
-            return Waypoints.Single(x => x.CompareTag("Spawnpoint"));
+            return Waypoints.Find(x => x.CompareTag("Spawnpoint"));
         }
 
         #endregion

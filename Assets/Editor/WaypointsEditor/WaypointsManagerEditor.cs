@@ -31,6 +31,11 @@ namespace AirTowerDefence.EditorTool
             {
                 manager.ConvertLastToEndpoint();
             }
+
+            if (GUILayout.Button("Edit waves/spawns"))
+            {
+                WaveEditor.BeginWaveEditing(manager.GetSpawnPoint().gameObject, manager.GetComponent<WavesManager>());
+            }
         }
 
         private void OnSceneGUI()
