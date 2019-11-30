@@ -137,7 +137,7 @@ MonoBehaviour:
   _Damage: 50
   _ProjectileSpeed: 10
   _Muzzle: {fileID: 6504923527400906264}
-  _ProjectilePrefab: {fileID: 6436359278968307913, guid: b2114d9bd55943340bbeeabcbb90f383,
+  _ProjectilePrefab: {fileID: 6436359278968307913, guid: 33538b0595717a34995f75cb8126795e,
     type: 3}
   _ProjectileRisingSpeed: 3
   _ProjectileRisingTimer: 2
@@ -300,7 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6758505620296938963}
   m_Layer: 0
-  m_Name: HomingMissileTower
+  m_Name: MissileSilo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

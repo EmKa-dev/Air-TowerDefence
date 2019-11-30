@@ -6,7 +6,6 @@ namespace AirTowerDefence.Tower
     public class SingleTargetter : Targetter, ISingleTargetBehaviour
     {
 
-        [SerializeField]
         public Transform Target { get; set; }
 
         private float UpdateTimer;
@@ -22,7 +21,7 @@ namespace AirTowerDefence.Tower
         {
             UpdateTimer -= Time.deltaTime;
 
-            if (UpdateTimer <= 0)
+            if (UpdateTimer <= 0f)
             {
                 Search();
                 UpdateTimer = this.SearchRate;

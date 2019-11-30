@@ -28,13 +28,15 @@ namespace AirTowerDefence.Tower
             {
                 Debug.LogError($"Missing component {nameof(ILauncher)}");
             }
+
+            ResetFireTimer();
         }
 
         private void Update()
         {
             FireTimer -= Time.deltaTime;
 
-            if (FireTimer <= 0)
+            if (FireTimer <= 0f)
             {
                 if (_TargetBehaviour is ISingleTargetBehaviour s)
                 {
@@ -45,8 +47,13 @@ namespace AirTowerDefence.Tower
                     _Launcher.Fire(m.Targets);
                 }
 
-                FireTimer = 1 / FireRate;
+                ResetFireTimer();
             }
+        }
+
+        private void ResetFireTimer()
+        {
+            FireTimer = 1 / FireRate;
         }
     }
 }

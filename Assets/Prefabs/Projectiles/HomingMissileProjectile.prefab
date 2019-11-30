@@ -92,5 +92,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _HitEffect: {fileID: 5444314328335192932, guid: 308da98da57cc644cbdea8f5eb9cdd20,
     type: 3}
-  _TargetMarkerPrefab: {fileID: 7174676754566940233, guid: 81cc8630bfb911b4c8b7a7949a89851c,
+  _TargetMarkerPrefab: {fileID: 7174676754566940233, guid: 8a17a8a911dfb83429eead39020699ee,
     type: 3}

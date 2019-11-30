@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Range: 15
   SearchRate: 2
-  _RotatingTurretMesh: {fileID: 0}
+  _TurretMesh: {fileID: 6574634253094596400}
   TargetsAmount: 3
 --- !u!114 &20403461217178583
 MonoBehaviour:
