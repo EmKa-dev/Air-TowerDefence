@@ -9,14 +9,14 @@ namespace AirTowerDefence.Managers
         public WavesContainer WavesContainer;
 
         private CreepFactory _CreepFactory;
-        private GameObject _Spawnpoint;
+        private Waypoint _Spawnpoint;
 
         public int WaveIndex { get; private set; } = 0;
 
         private void Start()
         {
             _CreepFactory = new CreepFactory();
-            _Spawnpoint = GetComponent<WaypointManager>().GetSpawnPoint().gameObject;
+            _Spawnpoint = GetComponent<WaypointManager>().GetSpawnPoint();
 
             if (WavesContainer.Waves.Count > 0)
             {
@@ -48,7 +48,10 @@ namespace AirTowerDefence.Managers
             foreach (var datapoint in spawn.SpawnData)
             {
                 var creep = Instantiate(_CreepFactory.GetCreepPrefab(datapoint.CreepIdentifier));
+
                 creep.transform.position = _Spawnpoint.transform.TransformPoint(datapoint.RelativePosition);
+                IMovingCreep c = creep.GetComponentInChildren<IMovingCreep>();
+                c.Initialize(_Spawnpoint);
             }
         }
     }

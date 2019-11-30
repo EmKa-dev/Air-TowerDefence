@@ -5,7 +5,7 @@ using System;
 namespace AirTowerDefence.Enemy.Controllers
 {
 
-    public class MoveController : Controller
+    public class MoveController : Controller, IMovingCreep
     {
         [SerializeField]
         private float _Speed;
@@ -14,15 +14,15 @@ namespace AirTowerDefence.Enemy.Controllers
         private float _RotationSpeed;
 
         private Waypoint TargetWayPoint;
-        private Vector3 _TargetPositionInWorldSpace;
         private Vector3 _RelativePositionToWayPoint;
+
+        private Vector3 _TargetPositionInWorldSpace;
 
         private bool IsRotatedTowardTarget;
 
-
-        void Start()
+        public void Initialize(Waypoint spawnpoint)
         {
-            FindSpawnPoint();
+            TargetWayPoint = spawnpoint;
             _TargetPositionInWorldSpace = transform.position;
             _RelativePositionToWayPoint = TargetWayPoint.transform.InverseTransformPoint(transform.position);
         }
@@ -30,11 +30,6 @@ namespace AirTowerDefence.Enemy.Controllers
         public override void UpdateControl()
         {
             MoveTowardTargetPosition();
-        }
-
-        private void FindSpawnPoint()
-        {
-            TargetWayPoint = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<Waypoint>();
         }
 
         private void MoveTowardTargetPosition()

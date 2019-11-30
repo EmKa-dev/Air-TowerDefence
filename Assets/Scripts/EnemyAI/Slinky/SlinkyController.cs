@@ -6,12 +6,11 @@ using UnityEngine;
 
 namespace AirTowerDefence.Enemy.Controllers
 {
-    public class SlinkyController : MonoBehaviour
+    public class SlinkyController : MonoBehaviour, IMovingCreep
     {
         private Animator _Animator;
 
-        [SerializeField]
-        private Transform _ParentTransform;
+        private Transform _RootObjectTransform;
 
         [SerializeField]
         private Transform _AnimationSteps;
@@ -36,26 +35,22 @@ namespace AirTowerDefence.Enemy.Controllers
         private float _HopTimer;
         private bool _IsHopping;
 
-        void Start()
-        {
-            FindSpawnPoint();
-
-            _NewPosition = _ParentTransform.position;
-            _HopTimer = _TimeBetweenHops;
-
-            _TargetPositionInWorldSpace = transform.position;
-            _RelativePositionToWayPoint = TargetWayPoint.transform.InverseTransformPoint(transform.position);
-        }
-
-        private void FindSpawnPoint()
-        {
-            TargetWayPoint = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<Waypoint>();
-        }
-
         private void Awake()
         {
             _Animator = GetComponentInChildren<Animator>();
             _Animator.SetFloat("HopSpeed", _HopSpeed);
+
+            _RootObjectTransform = transform.root;
+        }
+
+        public void Initialize(Waypoint spawnpoint)
+        {
+            TargetWayPoint = spawnpoint;
+            _TargetPositionInWorldSpace = transform.position;
+            _RelativePositionToWayPoint = TargetWayPoint.transform.InverseTransformPoint(transform.position);
+            _NewPosition = _RootObjectTransform.position;
+
+            _HopTimer = _TimeBetweenHops;
         }
 
         void Update()
@@ -75,8 +70,8 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private void HopForward()
         {
-            _ParentTransform.position = _NewPosition;
-            _ParentTransform.rotation = _NewRotation;
+            _RootObjectTransform.position = _NewPosition;
+            _RootObjectTransform.rotation = _NewRotation;
             _Animator.Play("Slinky_HopForward", 0, 0f);
         }
 
