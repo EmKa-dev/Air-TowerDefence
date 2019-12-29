@@ -10,11 +10,11 @@ namespace AirTowerDefence.Projectile
 
         private float _Speed;
 
-        private float _Damage;
+        private int _Damage;
 
         private Transform Target;
 
-        public void Initialize(Transform target, float damage, float speed)
+        public void Initialize(Transform target, int damage, float speed)
         {
             Target = target;
             _Damage = damage;

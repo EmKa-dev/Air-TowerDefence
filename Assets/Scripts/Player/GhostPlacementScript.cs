@@ -1,7 +1,6 @@
-﻿using AirTowerDefence.Player;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace AirTowerDefence.Player
+namespace AirTowerDefence.Managers
 {
     public class GhostPlacementScript : MonoBehaviour
     {
@@ -9,15 +8,17 @@ namespace AirTowerDefence.Player
 
         public GameObject ActualBuilding;
 
-        void Start()
+        void Update()
         {
+            IsPlacementValid = CheckIfPlacementIsValid();
 
         }
 
-        void Update()
+        private bool CheckIfPlacementIsValid()
         {
-            IsPlacementValid = true;
-
+            //TODO:
+            //Check placement conditions for example is on terrain, doesnt collide with other objects etc. 
+            return true;
         }
     }
 }

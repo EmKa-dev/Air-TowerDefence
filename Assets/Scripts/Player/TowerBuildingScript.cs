@@ -1,19 +1,31 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using AirTowerDefence.Managers;
 using UnityEngine;
+
+//TODO
+// Find a way to communicate which tower is being selected from the shop-panel
 
 namespace AirTowerDefence.Player
 {
     public class TowerBuildingScript : MonoBehaviour
     {
+        
         [SerializeField]
-        private GameObject _GhostPrefab;
+        private LayerMask _LayerMask;
+
         [SerializeField]
-        private AimingScript _AimingScript;
+        private RectTransform _CrossHair;
+
+        private GameObject _Camera;
 
         private bool IsPlacingTower;
+
         private GameObject _GhostThatIsBeingPlaced;
+
+
+        private void Awake()
+        {
+            _Camera = Camera.main.gameObject;
+        }
 
         void Update()
         {
@@ -22,24 +34,26 @@ namespace AirTowerDefence.Player
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    ExitBuildingMode();
+                    ExitBuildMode();
                 }
 
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     BuildTower();
                 }
+
+                PositionGhostAtAim();
+
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && !IsPlacingTower)
             {
-                EnterBuildMode();
+                EnterBuildMode(Shop.Instance.ShopItems[0]._GhostPrefab);
             }
         }
 
         private void BuildTower()
         {
-            //GetComponent placementscript
             //Query placementscript for validity of placement
             var ghost = _GhostThatIsBeingPlaced.GetComponentInChildren<GhostPlacementScript>();
 
@@ -47,23 +61,36 @@ namespace AirTowerDefence.Player
             {
                 Instantiate(ghost.ActualBuilding, _GhostThatIsBeingPlaced.transform.position, _GhostThatIsBeingPlaced.transform.rotation);
 
-                ExitBuildingMode();
+                ExitBuildMode();
             }
         }
 
-        private void EnterBuildMode()
+        private void EnterBuildMode(GameObject ghost)
         {
             IsPlacingTower = true;
 
-            _GhostThatIsBeingPlaced = Instantiate(_GhostPrefab);
+            _GhostThatIsBeingPlaced = Instantiate(ghost);
 
-            _AimingScript.ChangeMarker(_GhostThatIsBeingPlaced);
+            _CrossHair.gameObject.SetActive(false);
         }
 
-        private void ExitBuildingMode()
+        private void ExitBuildMode()
         {
             IsPlacingTower = false;
-            _AimingScript.ChangeToOriginalMarker();
+
+            Destroy(_GhostThatIsBeingPlaced);
+            _CrossHair.gameObject.SetActive(true);
+        }
+
+        private void PositionGhostAtAim()
+        {
+            Ray ray = new Ray(_Camera.transform.position, _Camera.transform.forward);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, _LayerMask))
+            {
+                _GhostThatIsBeingPlaced.transform.position = hit.point;
+                _GhostThatIsBeingPlaced.transform.position = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
+            }
         }
     }
 }

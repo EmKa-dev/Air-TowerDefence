@@ -6,15 +6,16 @@ namespace AirTowerDefence.Enemy
 {
     public class PlayerDetector : MonoBehaviour
     {
+
+        public event Action<Transform> TargetDetected;
+        public event Action<Transform> TargetLost;
+
         [SerializeField]
         private float _Range;
 
         private bool TargetInSight = false;
 
         private static Transform _Player;
-
-        public event Action<Transform> TargetDetected;
-        public event Action<Transform> TargetLost;
 
 
         private void Start()
@@ -24,6 +25,7 @@ namespace AirTowerDefence.Enemy
                 _Player = GameManager.Instance.Player;
             }
         }
+
         public bool IsPlayerWithinRange()
         {
             return Vector3.Distance(transform.position, _Player.position) < _Range;
@@ -58,10 +60,5 @@ namespace AirTowerDefence.Enemy
             TargetInSight = false;
             TargetLost?.Invoke(_Player);
         }
-
-        //private void OnDrawGizmos()
-        //{
-        //    Gizmos.DrawWireSphere(transform.position, _Range);
-        //}
     }
 }

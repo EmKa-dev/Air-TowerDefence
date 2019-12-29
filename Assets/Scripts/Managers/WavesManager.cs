@@ -1,4 +1,5 @@
-﻿using AirTowerDefence.EnemySpawn;
+﻿using AirTowerDefence.Enemy;
+using AirTowerDefence.EnemySpawn;
 using System.Collections;
 using UnityEngine;
 

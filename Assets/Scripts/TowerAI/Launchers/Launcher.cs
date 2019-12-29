@@ -9,7 +9,7 @@ namespace AirTowerDefence.Tower
         [Header("Attributes")]
 
         [SerializeField]
-        protected float _Damage;
+        protected int _Damage;
 
         [SerializeField]
         protected float _ProjectileSpeed;

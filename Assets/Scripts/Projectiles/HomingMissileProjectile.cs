@@ -13,7 +13,7 @@ namespace AirTowerDefence.Projectile
 
         private Transform _Target;
 
-        private float _Damage;
+        private int _Damage;
 
         private float _Speed;
 
@@ -21,7 +21,7 @@ namespace AirTowerDefence.Projectile
 
         private GameObject _MarkerObject;
 
-        public void Initialize(Transform target, float damage, float speed)
+        public void Initialize(Transform target, int damage, float speed)
         {
             _Target = target;
             _Damage = damage;
@@ -30,7 +30,7 @@ namespace AirTowerDefence.Projectile
             CreateMarkerAtTarget();
         }
 
-        public void Initialize(Vector3 lastknownposition, float damage, float speed)
+        public void Initialize(Vector3 lastknownposition, int damage, float speed)
         {
             _Damage = damage;
             _Speed = speed;

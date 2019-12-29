@@ -3,7 +3,7 @@ using UnityEngine;
 
 //TODO:
 //Make this class shared or static/singelton (no point in multiple instances of this)
-namespace AirTowerDefence.Managers
+namespace AirTowerDefence.EnemySpawn
 {
     public class CreepFactory
     {

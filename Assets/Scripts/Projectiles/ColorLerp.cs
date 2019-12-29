@@ -1,5 +1,4 @@
-﻿using System;
-using AirTowerDefence.Managers;
+﻿using AirTowerDefence.Managers;
 using UnityEngine;
 
 namespace AirTowerDefence.Projectile

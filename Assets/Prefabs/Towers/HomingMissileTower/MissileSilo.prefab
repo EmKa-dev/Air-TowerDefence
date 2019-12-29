@@ -128,6 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4353575242605871920}
+  - component: {fileID: 1668656421666471706}
   m_Layer: 0
   m_Name: MissileSilo
   m_TagString: Untagged
@@ -152,6 +153,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1668656421666471706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734183792669077795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb28139f53ae2d4a8d9aea3e886af2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GhostPrefab: {fileID: 6333201348830807209, guid: 52b08dee33162a043a1916afe892ff25,
+    type: 3}
+  Icon: {fileID: 21300000, guid: f29dea094a879c14f9135f92c53d9263, type: 3}
+  Cost: 1050
 --- !u!1 &3257948437125083564
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095c3767180014b468eae623aba99b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Damage: 50
+  _Damage: 0
   _ProjectileSpeed: 10
   _Muzzle: {fileID: 4316183384691648763}
   _ProjectilePrefab: {fileID: 6436359278968307913, guid: 33538b0595717a34995f75cb8126795e,

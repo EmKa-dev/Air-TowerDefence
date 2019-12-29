@@ -1,6 +1,4 @@
-﻿using AirTowerDefence.Projectile;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace AirTowerDefence.Enemy.Controllers
 {

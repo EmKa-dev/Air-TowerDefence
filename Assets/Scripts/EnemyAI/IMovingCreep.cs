@@ -1,6 +1,11 @@
 ﻿using AirTowerDefence.EnemySpawn;
 
-public interface IMovingCreep
+namespace AirTowerDefence.Enemy
 {
-    void Initialize(Waypoint spawnpoint);
+
+    public interface IMovingCreep
+    {
+        void Initialize(Waypoint spawnpoint);
+    }
 }
+

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8472412030965611242}
   - component: {fileID: 5378379009398155613}
   - component: {fileID: 2875529667052962800}
-  - component: {fileID: 1721084111871107663}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -78,20 +77,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4886216490835347705}
   m_Mesh: {fileID: 552067703183880873, guid: 3f112fa4838e7c44aa3b6fe50500c926, type: 3}
---- !u!114 &1721084111871107663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4886216490835347705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e503f60d42cce74db674dd9dd086a7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActualBuilding: {fileID: 734183792669077795, guid: acec48eb22b4a7a439e8982d4121cc9a,
-    type: 3}
 --- !u!1 &6333201348830807209
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,6 +86,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8714610772915789240}
+  - component: {fileID: 8325860695728444422}
   m_Layer: 0
   m_Name: MissileSilo-Ghost
   m_TagString: Untagged
@@ -123,3 +109,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8325860695728444422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6333201348830807209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e503f60d42cce74db674dd9dd086a7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActualBuilding: {fileID: 734183792669077795, guid: acec48eb22b4a7a439e8982d4121cc9a,
+    type: 3}
