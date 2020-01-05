@@ -1,4 +1,6 @@
 ﻿using AirTowerDefence.Common;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,19 +45,44 @@ namespace AirTowerDefence.Managers
         private RectTransform _ShopIconPrefab;
 
         [SerializeField]
+        private RectTransform _SelectionMarkerPrefab;
+
+        [SerializeField]
         private List<ShopItem> _ShopItems;
 
         [SerializeField]
         private RectTransform _TowerShopPanel;
 
-        public List<ShopItem> ShopItems
+        private RectTransform _SelectionMarker;
+
+        private int _SelectionIndex = 0;
+
+        private Transform[] _ShopPanelElements;
+
+        public ShopItem SelectedItem
         {
-            get { return _ShopItems; }
+            get => _ShopItems[_SelectionIndex];
         }
 
         void Awake()
         {
+            StartCoroutine("Initialize");
+        }
 
+        private IEnumerator Initialize()
+        {
+            InitializeShopPanel();
+
+            _ShopPanelElements = GetChildrenArray(_TowerShopPanel);
+
+            yield return new WaitForEndOfFrame();
+
+            InitializeSelectionMarker();
+        }
+
+
+        private void InitializeShopPanel()
+        {
             _ShopItems.Sort((x, y) => x.Cost.CompareTo(y.Cost));
 
             foreach (var item in _ShopItems)
@@ -66,6 +93,44 @@ namespace AirTowerDefence.Managers
 
                 element.GetComponentInChildren<Text>().text = item.Cost.ToString();
             }
+        }
+
+        private Transform[] GetChildrenArray(RectTransform panel)
+        {
+            var arr = new Transform[panel.childCount];
+
+            for (int i = 0; i < panel.childCount; i++)
+            {
+                arr[i] = panel.GetChild(i);
+            }
+
+            return arr;
+        }
+
+        private void InitializeSelectionMarker()
+        {
+            _SelectionMarker = Instantiate(_SelectionMarkerPrefab);
+
+            _SelectionMarker.SetParent(_TowerShopPanel);
+
+            var target = _ShopPanelElements[_SelectionIndex];
+
+            _SelectionMarker.localPosition = new Vector3(target.localPosition.x, target.localPosition.y);
+            _SelectionMarker.localScale = Vector3.one;
+        }
+
+        public void SwitchSelectedItem()
+        {
+            _SelectionIndex++;
+
+            if (_SelectionIndex >= _ShopPanelElements.Length)
+            {
+                _SelectionIndex = 0;
+            }
+
+            var target = _ShopPanelElements[_SelectionIndex];
+
+            _SelectionMarker.localPosition = new Vector3(target.localPosition.x, target.localPosition.y);
         }
     }
 }

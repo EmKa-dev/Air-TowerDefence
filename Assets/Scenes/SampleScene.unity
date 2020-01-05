@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97dc872b754f56e489a894f919904bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Next: {fileID: 1514003128}
+  _Next: {fileID: 0}
 --- !u!23 &299239537
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1001,7 +1001,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 630414371}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.2336287, y: 1.0731462, z: -4.5325565}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1037,10 +1037,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ShopIconPrefab: {fileID: 4609037662591093884, guid: b4c91eced4d015d4eacf18931ff5cf90,
     type: 3}
+  _SelectionMarkerPrefab: {fileID: 7177274612554693124, guid: 0291ae2f421998247a7c20a94a09812e,
+    type: 3}
   _ShopItems:
   - {fileID: 1668656421666471706, guid: acec48eb22b4a7a439e8982d4121cc9a, type: 3}
   - {fileID: 6666960413470865942, guid: 21dcd7ccb99046141b14432ca969f022, type: 3}
   _TowerShopPanel: {fileID: 1718205182}
+  InitPos: {x: 0, y: 0, z: 0}
 --- !u!114 &630414376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1488,7 +1491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97dc872b754f56e489a894f919904bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Next: {fileID: 299239536}
+  _Next: {fileID: 0}
 --- !u!23 &1062215440
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1579,7 +1582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97dc872b754f56e489a894f919904bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Next: {fileID: 1905898312}
+  _Next: {fileID: 0}
 --- !u!23 &1204813988
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1670,7 +1673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97dc872b754f56e489a894f919904bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Next: {fileID: 1204813987}
+  _Next: {fileID: 0}
 --- !u!23 &1245963795
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1761,7 +1764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97dc872b754f56e489a894f919904bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Next: {fileID: 0}
+  _Next: {fileID: 0}
 --- !u!23 &1514003129
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2112,7 +2115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.99020815, a: 0.65882355}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.65882355}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2267,7 +2270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97dc872b754f56e489a894f919904bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Next: {fileID: 0}
+  _Next: {fileID: 0}
 --- !u!23 &1905898313
 MeshRenderer:
   m_ObjectHideFlags: 0

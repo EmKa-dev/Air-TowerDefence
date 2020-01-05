@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdb28139f53ae2d4a8d9aea3e886af2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _GhostPrefab: {fileID: 6333201348830807209, guid: 52b08dee33162a043a1916afe892ff25,
+  GhostPrefab: {fileID: 6333201348830807209, guid: 52b08dee33162a043a1916afe892ff25,
     type: 3}
   Icon: {fileID: 21300000, guid: f29dea094a879c14f9135f92c53d9263, type: 3}
   Cost: 1050

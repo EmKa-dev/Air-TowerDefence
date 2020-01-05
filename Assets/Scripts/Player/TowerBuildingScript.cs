@@ -46,9 +46,14 @@ namespace AirTowerDefence.Player
 
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha1) && !IsPlacingTower)
+            if (Input.GetKeyDown(KeyCode.B) && !IsPlacingTower)
             {
-                EnterBuildMode(Shop.Instance.ShopItems[0]._GhostPrefab);
+                EnterBuildMode(Shop.Instance.SelectedItem.GhostPrefab);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                Shop.Instance.SwitchSelectedItem();
             }
         }
 

@@ -121,7 +121,15 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private Quaternion GetNewRotation()
         {
-            Quaternion lookrot = Quaternion.LookRotation(_TargetPositionInWorldSpace - _NewPosition);
+            var dir = _TargetPositionInWorldSpace - _NewPosition;
+
+            if (dir == Vector3.zero)
+            {
+                return Quaternion.Euler(Vector3.zero);
+
+            }
+
+            Quaternion lookrot = Quaternion.LookRotation(dir);
             return Quaternion.Euler(0, lookrot.eulerAngles.y, 0);
         }
     }

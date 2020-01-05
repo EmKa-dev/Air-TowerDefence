@@ -55,6 +55,12 @@ namespace AirTowerDefence.Enemy.Controllers
         private void RotateTowardsTarget()
         {
             Vector3 dir = _TargetPositionInWorldSpace - transform.position;
+        
+            if (dir == Vector3.zero)
+            {
+                return;
+            }
+
             Quaternion lookrot = Quaternion.LookRotation(dir);
 
             RotateBody();

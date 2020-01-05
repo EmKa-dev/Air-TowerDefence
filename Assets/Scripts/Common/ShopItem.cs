@@ -4,7 +4,7 @@ namespace AirTowerDefence.Common
 {
     public class ShopItem : MonoBehaviour
     {
-        public GameObject _GhostPrefab;
+        public GameObject GhostPrefab;
 
         public Sprite Icon;
 
