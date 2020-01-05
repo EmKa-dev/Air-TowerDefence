@@ -1,9 +1,6 @@
 ﻿using AirTowerDefence.Managers;
 using UnityEngine;
 
-//TODO
-// Find a way to communicate which tower is being selected from the shop-panel
-
 namespace AirTowerDefence.Player
 {
     public class TowerBuildingScript : MonoBehaviour
@@ -29,7 +26,6 @@ namespace AirTowerDefence.Player
 
         void Update()
         {
-
             if (IsPlacingTower)
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
