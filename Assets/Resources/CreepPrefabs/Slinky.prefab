@@ -226,7 +226,7 @@ MonoBehaviour:
   _AnimationSteps: {fileID: 695251710694639423}
   _TimeBetweenHops: 0.1
   _HopSpeed: 2.5
-  MaxDistanceToTargetBeforeNext: 1
+  MaxDistanceToTargetBeforeNext: 0.6
 --- !u!1 &4080333683898330455
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Lives: 0
-  _Health: 0
+  _Health: 5
 --- !u!65 &2389855850620471384
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -125,7 +125,7 @@ namespace AirTowerDefence.Enemy.Controllers
 
             if (dir == Vector3.zero)
             {
-                return Quaternion.Euler(Vector3.zero);
+                return Quaternion.Euler(dir);
 
             }
 

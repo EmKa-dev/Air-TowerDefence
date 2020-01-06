@@ -1,4 +1,5 @@
 ﻿using AirTowerDefence.Common;
+using AirTowerDefence.Player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -59,14 +60,46 @@ namespace AirTowerDefence.Managers
 
         private Transform[] _ShopPanelElements;
 
-        public ShopItem SelectedItem
-        {
-            get => _ShopItems[_SelectionIndex];
-        }
+        private ShopItem _SelectedItem;
 
         void Awake()
         {
             StartCoroutine("Initialize");
+        }
+
+        public bool TryGetSelectedGhost(MoneyBank playerBank, out GameObject res)
+        {
+            if (playerBank.Balance > _SelectedItem.Cost)
+            {
+                res = _SelectedItem.GhostPrefab;
+                return true;
+            }
+
+            res = null;
+            return false;
+        }
+
+        public GameObject CommitPurchase(MoneyBank playerbank)
+        {
+            playerbank.SubtractFromBalance(_SelectedItem.Cost);
+
+            return _SelectedItem.ActualBuilding;
+        }
+
+        public void SwitchSelectedItem()
+        {
+            _SelectionIndex++;
+
+            if (_SelectionIndex >= _ShopPanelElements.Length)
+            {
+                _SelectionIndex = 0;
+            }
+
+            var target = _ShopPanelElements[_SelectionIndex];
+
+            _SelectionMarker.localPosition = new Vector3(target.localPosition.x, target.localPosition.y);
+
+            _SelectedItem = _ShopItems[_SelectionIndex];
         }
 
         private IEnumerator Initialize()
@@ -79,7 +112,6 @@ namespace AirTowerDefence.Managers
 
             InitializeSelectionMarker();
         }
-
 
         private void InitializeShopPanel()
         {
@@ -117,20 +149,8 @@ namespace AirTowerDefence.Managers
 
             _SelectionMarker.localPosition = new Vector3(target.localPosition.x, target.localPosition.y);
             _SelectionMarker.localScale = Vector3.one;
-        }
 
-        public void SwitchSelectedItem()
-        {
-            _SelectionIndex++;
-
-            if (_SelectionIndex >= _ShopPanelElements.Length)
-            {
-                _SelectionIndex = 0;
-            }
-
-            var target = _ShopPanelElements[_SelectionIndex];
-
-            _SelectionMarker.localPosition = new Vector3(target.localPosition.x, target.localPosition.y);
+            _SelectedItem = _ShopItems[_SelectionIndex];
         }
     }
 }

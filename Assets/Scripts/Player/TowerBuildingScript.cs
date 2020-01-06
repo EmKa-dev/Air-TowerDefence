@@ -4,29 +4,29 @@ using UnityEngine;
 namespace AirTowerDefence.Player
 {
     public class TowerBuildingScript : MonoBehaviour
-    {
-        
+    {       
         [SerializeField]
         private LayerMask _LayerMask;
 
         [SerializeField]
-        private RectTransform _CrossHair;
+        private RectTransform _CrossHairCanvas;
 
+        private MoneyBank _PlayerBank;
         private GameObject _Camera;
 
-        private bool IsPlacingTower;
+        private bool IsInBuildMode = false;
 
         private GameObject _GhostThatIsBeingPlaced;
-
 
         private void Awake()
         {
             _Camera = Camera.main.gameObject;
+            _PlayerBank = GetComponent<MoneyBank>();
         }
 
         void Update()
         {
-            if (IsPlacingTower)
+            if (IsInBuildMode)
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
@@ -41,46 +41,54 @@ namespace AirTowerDefence.Player
                 PositionGhostAtAim();
 
             }
-
-            if (Input.GetKeyDown(KeyCode.B) && !IsPlacingTower)
+            else
             {
-                EnterBuildMode(Shop.Instance.SelectedItem.GhostPrefab);
-            }
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    if (Shop.Instance.TryGetSelectedGhost(_PlayerBank, out GameObject res))
+                    {
+                        EnterBuildMode(res);
+                    }
+                }
 
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                Shop.Instance.SwitchSelectedItem();
-            }
-        }
-
-        private void BuildTower()
-        {
-            //Query placementscript for validity of placement
-            var ghost = _GhostThatIsBeingPlaced.GetComponentInChildren<GhostPlacementScript>();
-
-            if (ghost.IsPlacementValid)
-            {
-                Instantiate(ghost.ActualBuilding, _GhostThatIsBeingPlaced.transform.position, _GhostThatIsBeingPlaced.transform.rotation);
-
-                ExitBuildMode();
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    Shop.Instance.SwitchSelectedItem();
+                }
             }
         }
 
         private void EnterBuildMode(GameObject ghost)
         {
-            IsPlacingTower = true;
+            IsInBuildMode = true;
 
             _GhostThatIsBeingPlaced = Instantiate(ghost);
 
-            _CrossHair.gameObject.SetActive(false);
+            _CrossHairCanvas.gameObject.SetActive(false);
+        }
+
+        //TODO: Require call to shop (CommitPurchase) to get actual building.
+        private void BuildTower()
+        {
+            //Propsed: Don't keep the actual/real building in the GhostScript, which should exclusively be for checking valid placement
+            var ghost = _GhostThatIsBeingPlaced.GetComponentInChildren<GhostPlacementScript>();
+
+            if (ghost.IsPlacementValid)
+            {
+                var building = Shop.Instance.CommitPurchase(_PlayerBank);
+
+                Instantiate(building, _GhostThatIsBeingPlaced.transform.position, _GhostThatIsBeingPlaced.transform.rotation);
+
+                ExitBuildMode();
+            }
         }
 
         private void ExitBuildMode()
         {
-            IsPlacingTower = false;
+            IsInBuildMode = false;
 
             Destroy(_GhostThatIsBeingPlaced);
-            _CrossHair.gameObject.SetActive(true);
+            _CrossHairCanvas.gameObject.SetActive(true);
         }
 
         private void PositionGhostAtAim()

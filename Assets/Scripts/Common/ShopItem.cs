@@ -6,6 +6,8 @@ namespace AirTowerDefence.Common
     {
         public GameObject GhostPrefab;
 
+        public GameObject ActualBuilding;
+
         public Sprite Icon;
 
         public int Cost;

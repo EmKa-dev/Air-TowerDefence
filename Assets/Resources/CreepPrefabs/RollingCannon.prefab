@@ -199,8 +199,8 @@ GameObject:
   - component: {fileID: 4565087072180238863}
   - component: {fileID: 4565087072180238862}
   - component: {fileID: 1101388374}
-  - component: {fileID: 5559350918926127352}
   - component: {fileID: 5502473774082384675}
+  - component: {fileID: 5559350918926127352}
   m_Layer: 10
   m_Name: RollingCannon
   m_TagString: Creep
@@ -303,19 +303,6 @@ MonoBehaviour:
   _IsDefaultController: 1
   _Speed: 1
   _RotationSpeed: 30
---- !u!65 &5559350918926127352
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4565087072180238861}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.7955893, y: 0.60660577, z: 1.014025}
-  m_Center: {x: -0.0019283891, y: 0.0038567781, z: 0.19546428}
 --- !u!114 &5502473774082384675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,4 +316,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Lives: 0
-  _Health: 0
+  _Health: 50
+--- !u!65 &5559350918926127352
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565087072180238861}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7955893, y: 0.60660577, z: 1.014025}
+  m_Center: {x: -0.0019283891, y: 0.0038567781, z: 0.19546428}

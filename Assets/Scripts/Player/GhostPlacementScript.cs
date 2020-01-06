@@ -6,8 +6,6 @@ namespace AirTowerDefence.Managers
     {
         public bool IsPlacementValid { get; private set; }
 
-        public GameObject ActualBuilding;
-
         void Update()
         {
             IsPlacementValid = CheckIfPlacementIsValid();

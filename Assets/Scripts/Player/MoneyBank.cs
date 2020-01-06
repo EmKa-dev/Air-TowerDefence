@@ -19,9 +19,24 @@ namespace AirTowerDefence.Player
 			}
 		}
 
+
+		private void Start()
+		{
+			Balance = 2000;
+		}
 		private void OnBalanceChanged()
 		{
 			BalanceChangedEvent?.Invoke(_Balance);
+		}
+
+		public void SubtractFromBalance(int amount)
+		{
+			Balance -= amount;
+		}
+
+		public void AddToBalance(int amount)
+		{
+			Balance += amount;
 		}
 	}
 }

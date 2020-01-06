@@ -170,6 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GhostPrefab: {fileID: 6600949393915261775, guid: e6e6a2128b96ec74889cefe1718275be,
     type: 3}
+  ActualBuilding: {fileID: 5123506143588806503}
   Icon: {fileID: 21300000, guid: 30cf4f2742f759e428203768e12f02c9, type: 3}
   Cost: 10
 --- !u!65 &191713618
@@ -306,7 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130013bca4f98884aa82109fc0e87c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Damage: 0
+  _Damage: 1
   _ProjectileSpeed: 12
   _Muzzle: {fileID: 5123506143378491042}
   _ProjectilePrefab: {fileID: 1217916105462186486, guid: 44f8b8b6dc924e94b99b10215e679f27,
