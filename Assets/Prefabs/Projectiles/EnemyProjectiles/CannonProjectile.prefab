@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3852925846631257847}
   - component: {fileID: 7549333719072651947}
   - component: {fileID: 1607025360939238930}
+  - component: {fileID: 1287027746889605745}
   m_Layer: 0
   m_Name: CannonProjectile
   m_TagString: Untagged
@@ -91,8 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdaff8c1bf928a14dae45757cd455579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitEffect: {fileID: 0}
-  _Speed: 2
+  _HitEffect: {fileID: 5444314328335192932, guid: 308da98da57cc644cbdea8f5eb9cdd20,
+    type: 3}
 --- !u!114 &1607025360939238930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,3 +111,16 @@ MonoBehaviour:
   ColorPropertyReferenceID: Color_D830E664
   StartLerpDistance: 10
   MinLerpDistance: 0.5
+--- !u!135 &1287027746889605745
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7448342261232778757}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.50000006
+  m_Center: {x: 0, y: 0, z: 0}

@@ -24,7 +24,7 @@ namespace AirTowerDefence.Projectile
         {
             if (Target == null)
             {
-                Destroy(gameObject);
+                Destroy(this.gameObject);
                 return;
             }
 
@@ -50,7 +50,6 @@ namespace AirTowerDefence.Projectile
             Target.GetComponent<IDamagable>().TakeDamage(_Damage);
 
             Destroy(this.gameObject);
-
         }
     }
 }

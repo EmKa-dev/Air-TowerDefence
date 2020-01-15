@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using AirTowerDefence.Managers;
+using AirTowerDefence.Projectile;
+using UnityEngine;
 
 namespace AirTowerDefence.Enemy.Controllers
 {
@@ -72,7 +74,8 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private void Fire()
         {
-            var p = Instantiate(_ProjectilePrefab, _Muzzle.position, _Muzzle.rotation);
+            var bullet = Instantiate(_ProjectilePrefab, _Muzzle.position, _Muzzle.rotation);
+            bullet.GetComponent<IProjectile>().Initialize(GameManager.Instance.Player, _Damage, _ProjectileSpeed);
 
             _Animator.SetTrigger("OnLaunch");
             _StunnedAfterFiringTimer = AfterFireStunTime;
@@ -122,8 +125,6 @@ namespace AirTowerDefence.Enemy.Controllers
             }
         }
 
-
-
         private void TargetDetected(Transform target)
         {
             _Target = target;
@@ -133,7 +134,7 @@ namespace AirTowerDefence.Enemy.Controllers
         private void TargetLost(Transform target)
         {
             _Target = null;
-            InvokeReliquishControl();
+            InvokeRelinquishControl();
         }
     }
 }

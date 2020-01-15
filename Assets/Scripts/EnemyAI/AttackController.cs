@@ -7,6 +7,12 @@ namespace AirTowerDefence.Enemy.Controllers
     {
         [SerializeField]
         protected float _AttackRate;
+
+        [SerializeField]
+        protected int _Damage;
+
+        [SerializeField]
+        protected float _ProjectileSpeed;
     }
 }
 

@@ -26,6 +26,15 @@ namespace AirTowerDefence.Enemy.Controllers
             _RelativePositionToWayPoint = TargetWayPoint.transform.InverseTransformPoint(transform.position);
         }
 
+        private void Awake()
+        {
+            //In case where this wasn't initialized by a spawnpoint, set target to some endpoint
+            var end = GameObject.FindGameObjectWithTag("Endpoint");
+
+            TargetWayPoint = end.GetComponent<Waypoint>();
+            _TargetPositionInWorldSpace = end.transform.position;
+        }
+
         public override void UpdateControl()
         {
             MoveTowardTargetPosition();

@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580d4e3c38701504381f8461dd9841aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Range: 10
+  _Range: 30
 --- !u!114 &4565087072180238862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +282,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _IsDefaultController: 0
   _AttackRate: 0.3
+  _Damage: 1
+  _ProjectileSpeed: 8
   _Muzzle: {fileID: 4565087072028986831}
   _ProjectilePrefab: {fileID: 7448342261232778757, guid: 4d6331a3c5df851429e9b97e147939e3,
     type: 3}
@@ -302,7 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _IsDefaultController: 1
   _Speed: 1
-  _RotationSpeed: 30
+  _RotationSpeed: 50
 --- !u!114 &5502473774082384675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,5 +330,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7955893, y: 0.60660577, z: 1.014025}
-  m_Center: {x: -0.0019283891, y: 0.0038567781, z: 0.19546428}
+  m_Size: {x: 0.8, y: 0.6, z: 1}
+  m_Center: {x: 0, y: 0, z: 0.2}

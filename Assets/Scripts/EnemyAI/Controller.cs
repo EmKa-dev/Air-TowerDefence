@@ -27,7 +27,7 @@ namespace AirTowerDefence.Enemy.Controllers
             RequestControl?.Invoke(this);
         }
 
-        protected void InvokeReliquishControl()
+        protected void InvokeRelinquishControl()
         {
             RelinquishControl?.Invoke();
         }
