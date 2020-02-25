@@ -8,7 +8,7 @@ namespace AirTowerDefence.Tower
 
         public float Range;
 
-        public float SearchRate;
+        public float SecondsBetweenSearches;
 
         [Header("Setup")]
 

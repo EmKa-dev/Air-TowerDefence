@@ -1,6 +1,6 @@
 ﻿namespace AirTowerDefence.Common
 {
-    internal interface IDamagable
+    public interface IDamagable
     {
         void TakeDamage(int damage);
     }

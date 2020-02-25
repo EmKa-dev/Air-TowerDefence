@@ -12,7 +12,7 @@ namespace AirTowerDefence.Tower
 
         void Awake()
         {
-            this.UpdateTimer = this.SearchRate;
+            this.UpdateTimer = this.SecondsBetweenSearches;
             this._TargetLayerMask = UnityEngine.LayerMask.GetMask("Creep");
             this._CandiateBuffer = new Collider[5];
         }
@@ -24,7 +24,7 @@ namespace AirTowerDefence.Tower
             if (UpdateTimer <= 0f)
             {
                 Search();
-                UpdateTimer = this.SearchRate;
+                UpdateTimer = this.SecondsBetweenSearches;
             }
 
             if (Target == null)

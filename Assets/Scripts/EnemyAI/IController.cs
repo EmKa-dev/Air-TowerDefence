@@ -11,5 +11,7 @@ namespace AirTowerDefence.Enemy.Controllers
         event Action RelinquishControl;
 
         void UpdateControl();
+
+        void OnControlLost();
     }
 }

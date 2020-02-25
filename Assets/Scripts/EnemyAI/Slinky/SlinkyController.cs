@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AirTowerDefence.Enemy.Controllers
 {
-    public class SlinkyController : MonoBehaviour, IMovingCreep
+    public class SlinkyController : MonoBehaviour, ISpawnableCreep
     {
         private Animator _Animator;
 

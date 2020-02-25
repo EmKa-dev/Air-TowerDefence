@@ -4,7 +4,7 @@ using AirTowerDefence.EnemySpawn;
 namespace AirTowerDefence.Enemy.Controllers
 {
 
-    public class MoveController : Controller, IMovingCreep
+    public class MoveController : Controller, ISpawnableCreep
     {
         [SerializeField]
         private float _Speed;
@@ -19,6 +19,8 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private bool IsRotatedTowardTarget;
 
+        private Animator _Animator;
+
         public void Initialize(Waypoint spawnpoint)
         {
             TargetWayPoint = spawnpoint;
@@ -28,6 +30,8 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private void Awake()
         {
+            _Animator = transform.root.GetComponentInChildren<Animator>();
+
             //In case where this wasn't initialized by a spawnpoint, set target to some endpoint
             var end = GameObject.FindGameObjectWithTag("Endpoint");
 
@@ -37,28 +41,42 @@ namespace AirTowerDefence.Enemy.Controllers
 
         public override void UpdateControl()
         {
-            MoveTowardTargetPosition();
-        }
-
-        private void MoveTowardTargetPosition()
-        {
-            if (Vector3.Distance(transform.position, _TargetPositionInWorldSpace) < 0.01f)
+            if (HasReachedTarget())
             {
                 GetNextTargetPosition();
                 IsRotatedTowardTarget = false;
             }
 
-
             if (IsRotatedTowardTarget)
             {
-                Vector3 targetvector = Vector3.MoveTowards(transform.position, _TargetPositionInWorldSpace, _Speed * Time.deltaTime);
+                if (_Animator != null)
+                {
+                    _Animator.SetBool("Moving", true);
+                }
 
-                transform.position = targetvector;
+                MoveTowardTargetPosition();
             }
             else
             {
                 RotateTowardsTarget();
+
+                if (_Animator != null)
+                {
+                    _Animator.SetBool("Moving", false);
+                }
             }
+        }
+
+        private void MoveTowardTargetPosition()
+        {
+            Vector3 targetvector = Vector3.MoveTowards(transform.position, _TargetPositionInWorldSpace, _Speed * Time.deltaTime);
+
+            transform.position = targetvector;
+        }
+
+        private bool HasReachedTarget()
+        {
+            return Vector3.Distance(transform.position, _TargetPositionInWorldSpace) < 0.01f;
         }
 
         private void RotateTowardsTarget()
@@ -84,7 +102,7 @@ namespace AirTowerDefence.Enemy.Controllers
 
             bool IsBodyRotationComplete()
             {
-                return Mathf.Abs(transform.rotation.eulerAngles.y - lookrot.eulerAngles.y) < 0.01f;
+                return (Mathf.Abs(transform.rotation.eulerAngles.y - lookrot.eulerAngles.y) < 0.01f);
             }
         }
 
@@ -96,6 +114,16 @@ namespace AirTowerDefence.Enemy.Controllers
             }
 
             _TargetPositionInWorldSpace = TargetWayPoint.transform.TransformPoint(_RelativePositionToWayPoint);
+        }
+
+        public override void OnControlLost()
+        {
+            IsRotatedTowardTarget = false;
+
+            if (_Animator != null)
+            {
+                _Animator.SetBool("Moving", false);
+            }
         }
     }
 }

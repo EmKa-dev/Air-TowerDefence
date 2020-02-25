@@ -3,7 +3,7 @@
 namespace AirTowerDefence.Enemy
 {
 
-    public interface IMovingCreep
+    public interface ISpawnableCreep
     {
         void Initialize(Waypoint spawnpoint);
     }

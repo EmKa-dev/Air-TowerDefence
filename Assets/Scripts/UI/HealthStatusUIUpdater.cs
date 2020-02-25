@@ -27,7 +27,6 @@ namespace AirTowerDefence.UI
         private void OnStatusChange((int lives, int health) tuple)
         {
             _LivesText.text = tuple.lives.ToString();
-
             //Health doesn't always reduce/add in sequence (ex. from 3 to 1 health and vice versa.)
             DeactivateAllHealthBars();
             ActivateHealthbars(tuple.health);

@@ -28,7 +28,7 @@ namespace AirTowerDefence.Tower
             if (UpdateTimer <= 0)
             {
                 Search();
-                UpdateTimer = this.SearchRate;
+                UpdateTimer = this.SecondsBetweenSearches;
             }
 
             if (Targets.All(x => x == null))

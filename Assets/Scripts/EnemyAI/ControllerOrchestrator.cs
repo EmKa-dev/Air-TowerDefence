@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 namespace AirTowerDefence.Enemy.Controllers
 {
@@ -35,7 +36,7 @@ namespace AirTowerDefence.Enemy.Controllers
                 }
             }
 
-            return -1;
+            throw new Exception($"Faulty setup in gameobject:{gameObject.name}, must have a default controller");
         }
 
         void Update()
@@ -45,11 +46,13 @@ namespace AirTowerDefence.Enemy.Controllers
 
         private void OnControllerRequest(IController controller)
         {
+            _ActiveController.OnControlLost();
             _ActiveController = controller;
         }
 
         private void OnControllerRelinqusish()
         {
+            _ActiveController.OnControlLost();
             _ActiveController = _Controllers[_DefaultControllerIndex];
         }
 

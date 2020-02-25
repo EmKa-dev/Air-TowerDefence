@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirTowerDefence.Enemy.Controllers;
+using System;
 using UnityEngine;
 
 namespace AirTowerDefence.Common
@@ -34,14 +35,6 @@ namespace AirTowerDefence.Common
                 { _Health = value; }
             }
         }
-        private void Update()
-        {
-            //Test
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                TakeDamage(1);
-            }
-        }
 
         private void Awake()
         {
@@ -69,7 +62,7 @@ namespace AirTowerDefence.Common
                 }
                 else
                 {
-                    Destroy(this.gameObject);
+                    Die();
                 }
             }
 
@@ -81,6 +74,24 @@ namespace AirTowerDefence.Common
             Lives--;
 
             Health = _MaxHealth;
+        }
+
+        private void Die()
+        {
+            var a = transform.root.GetComponentInChildren<Animator>();
+
+            if (a != null)
+            {
+                a.SetTrigger("Die");
+            }
+
+            var c = GetComponent<ControllerOrchestrator>();
+
+            if (c != null)
+            {
+                c.enabled = false;
+            }
+
         }
 
         private void NotifyHealthStatusChanged()

@@ -51,7 +51,7 @@ namespace AirTowerDefence.Managers
                 var creep = Instantiate(_CreepFactory.GetCreepPrefab(datapoint.CreepIdentifier));
 
                 creep.transform.position = _Spawnpoint.transform.TransformPoint(datapoint.RelativePosition);
-                IMovingCreep c = creep.GetComponentInChildren<IMovingCreep>();
+                ISpawnableCreep c = creep.GetComponentInChildren<ISpawnableCreep>();
                 c.Initialize(_Spawnpoint);
             }
         }

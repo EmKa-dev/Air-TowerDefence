@@ -19,7 +19,6 @@ namespace AirTowerDefence.Enemy.Controllers
 
         public event Action RelinquishControl;
 
-
         public abstract void UpdateControl();
 
         protected void InvokeRequestControl()
@@ -30,6 +29,10 @@ namespace AirTowerDefence.Enemy.Controllers
         protected void InvokeRelinquishControl()
         {
             RelinquishControl?.Invoke();
+        }
+
+        public virtual void OnControlLost()
+        {
         }
     }
 }
