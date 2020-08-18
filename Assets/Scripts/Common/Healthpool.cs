@@ -36,6 +36,11 @@ namespace AirTowerDefence.Common
             }
         }
 
+        [SerializeField]
+        private bool PlayAnimationOnDeath;
+        [SerializeField]
+        private GameObject ObjectToDestroy;
+
         private void Awake()
         {
             if (this.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -78,20 +83,26 @@ namespace AirTowerDefence.Common
 
         private void Die()
         {
-            var a = transform.root.GetComponentInChildren<Animator>();
-
-            if (a != null)
+            if (PlayAnimationOnDeath)
             {
-                a.SetTrigger("Die");
+                var a = transform.root.GetComponentInChildren<Animator>();
+
+                if (a != null)
+                {
+                    a.SetTrigger("Die");
+                }
+
+                var c = GetComponent<ControllerOrchestrator>();
+
+                if (c != null)
+                {
+                    c.enabled = false;
+                }
             }
-
-            var c = GetComponent<ControllerOrchestrator>();
-
-            if (c != null)
+            else
             {
-                c.enabled = false;
+                Destroy(ObjectToDestroy);
             }
-
         }
 
         private void NotifyHealthStatusChanged()

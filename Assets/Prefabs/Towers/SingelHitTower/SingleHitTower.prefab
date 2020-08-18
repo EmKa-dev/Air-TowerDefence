@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Range: 20
-  SearchRate: 2
+  SecondsBetweenSearches: 0
   _TurretMesh: {fileID: 5123506144563025319}
 --- !u!114 &2682515533592035829
 MonoBehaviour:

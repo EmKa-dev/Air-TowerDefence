@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.05
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 1.5157166, g: 1.5157166, b: 1.5157166, a: 1}
+  m_AmbientSkyColor: {r: 2.0236006, g: 2.0236006, b: 2.0236006, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -685,7 +685,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WavesContainer:
-    Waves: []
+    Waves:
+    - Spawns:
+      - SpawnData:
+        - CreepIdentifier: RollingCannon
+          RelativePosition: {x: 1.11, y: -0.01, z: 0}
+        - CreepIdentifier: RollingCannon
+          RelativePosition: {x: -0.82, y: -0.01, z: 0}
+        - CreepIdentifier: Slinky
+          RelativePosition: {x: 0, y: -0.01, z: -1.17}
+        - CreepIdentifier: Slinky
+          RelativePosition: {x: 0, y: -0.01, z: 1.34}
+        _TimeToNext: 0
 --- !u!114 &509588746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,7 +734,7 @@ Transform:
   - {fileID: 1204813990}
   - {fileID: 1634347761}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &524811687
 GameObject:
@@ -831,8 +842,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 9
   m_Type: 1
-  m_Color: {r: 0, g: 0.86945343, b: 1, a: 1}
-  m_Intensity: 19.42
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 4.67
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -893,7 +904,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 127.28, y: 65.8, z: 0}
 --- !u!1 &630414371
 GameObject:
@@ -938,7 +949,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &630414375
 MonoBehaviour:
@@ -1136,8 +1147,16 @@ MonoBehaviour:
     Waves:
     - Spawns:
       - SpawnData:
-        - CreepIdentifier: RollingCannon
-          RelativePosition: {x: 0, y: 0.31100002, z: 0}
+        - CreepIdentifier: Fishie
+          RelativePosition: {x: 0, y: -0.01, z: 0}
+        _TimeToNext: 3
+      - SpawnData:
+        - CreepIdentifier: Fishie
+          RelativePosition: {x: 0, y: -0.01, z: 0}
+        _TimeToNext: 5
+      - SpawnData:
+        - CreepIdentifier: Fishie
+          RelativePosition: {x: 0, y: -0.01, z: 0}
         _TimeToNext: 0
 --- !u!4 &803037611
 Transform:
@@ -1154,7 +1173,7 @@ Transform:
   - {fileID: 299239539}
   - {fileID: 1528917526}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &835931589
 GameObject:
@@ -1220,7 +1239,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &852830214
 Mesh:
@@ -1531,7 +1550,7 @@ Transform:
   m_Children:
   - {fileID: 400680562}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1062215438
 GameObject:
@@ -2076,7 +2095,7 @@ Transform:
   - {fileID: 374643567}
   - {fileID: 398782187}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1634347757
 GameObject:
@@ -2875,7 +2894,7 @@ Transform:
   m_Children:
   - {fileID: 704142632}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &5846361816155009246
 MonoBehaviour:
@@ -2941,75 +2960,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1001 &8275119990129117314
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5588214284697253891, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_Name
-      value: RollingCannon
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588214284697253892, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588214284697253892, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588214284697253892, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588214284697253892, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588214284697253892, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588214284697253892, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588214284697253892, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588214284697253892, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588214284697253892, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588214284697253892, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588214284697253892, guid: d1e4f1fe0be837c4d824009586fa144a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d1e4f1fe0be837c4d824009586fa144a, type: 3}
 --- !u!1 &9032648451154944025
 GameObject:
   m_ObjectHideFlags: 0

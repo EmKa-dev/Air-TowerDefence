@@ -166,6 +166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6541724448619837097}
   - component: {fileID: 1495739572869927102}
+  - component: {fileID: 265846869166582115}
   m_Layer: 0
   m_Name: Object
   m_TagString: Untagged
@@ -208,6 +209,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &265846869166582115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364235943154195295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6126f4dbc7f957c4dbab4e2b4a38789a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDestroy: {fileID: 5588214284697253891}
 --- !u!1 &5588214284349274052
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580d4e3c38701504381f8461dd9841aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Range: 10
+  _Range: 20
 --- !u!114 &5588214284697253888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +443,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Lives: 0
   _Health: 1
+  PlayAnimationOnDeath: 1
+  ObjectToDestroy: {fileID: 0}
 --- !u!65 &4607721167996195574
 BoxCollider:
   m_ObjectHideFlags: 0
